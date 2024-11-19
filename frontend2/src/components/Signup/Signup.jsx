@@ -27,16 +27,16 @@ function Signup() {
         try {
             setLoading(true);
             const res = await axios.post('https://socialnetworkingsite.onrender.com/auth/register', input, {
-                // headers: {
-                //     'Content-Type': 'application/json'
-                // },
-                // withCredentials: true
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
             });
             if (res.data.success) {
                 navigate("/login");
                 console.log(res);
                 
-                // toast.success(res.data.message);
+                toast.success(res.data.message);
                 setInput({
                     userName: "",
                     email: "",
@@ -45,7 +45,7 @@ function Signup() {
             }
         } catch (error) {
             console.log(error);
-            // toast.error(error.response.data.message);
+            toast.error(error.response.data.message);
         } finally {
             setLoading(false);
         }
