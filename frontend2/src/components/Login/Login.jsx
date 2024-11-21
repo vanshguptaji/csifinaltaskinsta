@@ -40,7 +40,7 @@ function Login() {
                 const user = res.config.data;
                 // Store token in localStorage or sessionStorage
                 localStorage.setItem('accesstoken', res.data.access);
-                localStorage.setItem('refreshtoken', JSON.stringify(res.data.refresh));
+                localStorage.setItem('refreshtoken', res.data.refresh);
                 dispatch(setAuthUser(user));
                 console.log(res);
                 
