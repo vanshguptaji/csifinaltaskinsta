@@ -4,7 +4,7 @@ import Sidebar from "./LeftSidebar";
 
 const Chatbox = () => {
   return (
-    <div className="w-screen h-screen p-8 pt-0 overflow-x-hidden">
+    <div className="w-screen h-screen pt-0 overflow-x-hidden">
       <div className="">
         <Header />
         <div className="flex h-full bg-[url('../../images/chatbox_bg.png')] bg-contain text-white overflow-hidden">

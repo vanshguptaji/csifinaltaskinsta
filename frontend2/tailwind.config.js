@@ -13,6 +13,7 @@ export default {
   		colors: {
   			customGray: '#101110',
   			postcardGray: '#343434',
+			liveborder: '#BBACF2',
   			sidebarGray: '#111111',
   			goliveGray: '#CAB2FF',
   			background: 'hsl(var(--background))',

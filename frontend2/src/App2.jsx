@@ -3,8 +3,10 @@ import Header from "./components/Header";
 import Sidebar from "./components/LeftSidebar";
 import Feed from "./components/Feed";
 import RightPanel from "./components/RightPanel";
+import useGetAllPost from "./hooks/useGetAllPost";
 
 function App2() {
+  useGetAllPost();
   return (
     <div className="w-screen h-screen flex flex-col bg-sidebarGray text-white overflow-x-hidden">
       <Header />

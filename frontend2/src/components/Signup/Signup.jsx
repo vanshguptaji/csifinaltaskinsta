@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 
 function Signup() {
     const [input, setInput] = useState({
-        userName: "",
+        full_name: "",
         email: "",
         password: ""
     });
@@ -26,28 +26,43 @@ function Signup() {
         e.preventDefault();
         try {
             setLoading(true);
-            const res = await axios.post('https://socialnetworkingsite.onrender.com/auth/register', input, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true
-            });
-            if (res.data.success) {
+            const res = await axios.post('https://hola-project.onrender.com/api/auth/register/',input);
+                // {
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     credentials: true,
+                // }
+            // );
+            console.log(res);
+            console.log("befrorecondition response");
+            
+            
+            if (res) {
                 navigate("/login");
-                console.log(res);
+                console.log(res.data.message);
+                console.log("succes true");
                 
                 toast.success(res.data.message);
                 setInput({
-                    userName: "",
+                    full_name: "",
                     email: "",
                     password: ""
                 });
+            }else {
+                console.log(res.error.message);
+                console.log("success false");
+                
             }
         } catch (error) {
-            console.log(error);
-            toast.error(error.response.data.message);
+            console.log(error.message);
+            toast.error(error.message);
+            console.log("no response");
+            
         } finally {
             setLoading(false);
+            console.log("finallly");
+            
         }
     }
 
@@ -63,15 +78,15 @@ function Signup() {
                 <div class="background-text">hola</div>
                 <div class="background-text2">hola</div>
 
-                <div class="form-container glass">
+                <div class="form-container">
                     <h1><span class="highlight">hola’</span> mi amigos</h1>
 
 
                     <form onSubmit={signupHandler}>
                         <input
                             type="text"
-                            name="userName"
-                            value={input.userName}
+                            name="full_name"
+                            value={input.full_name}
                             onChange={changeEventHandler}
                             placeholder="Create username"
                             required />

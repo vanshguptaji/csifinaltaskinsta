@@ -6,6 +6,7 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { setAuthUser } from '@/redux/authSlice';
 
 function Login() {
     const [input, setInput] = useState({
@@ -15,7 +16,7 @@ function Login() {
     const [loading, setLoading] = useState(false);
     // const { user } = useSelector(store => store.auth);
     const navigate = useNavigate();
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
@@ -23,20 +24,28 @@ function Login() {
 
     const loginHandler = async (e) => {
         e.preventDefault();
-        try {//https://socialnetworkingsite.onrender.com
+        try {    //https://socialnetworkingsite.onrender.com
             setLoading(true);
-            const res = await axios.post('https://socialnetworkingsite.onrender.com/auth/login', input, {
+            const res = await axios.post('https://hola-project.onrender.com/api/auth/login/', input,
+            );
+                // , {
                 // headers: {
                 //     'Content-Type': 'application/json'
                 // },
                 // withCredentials: true
-            });
-            if (res.data.success) {
-                // dispatch(setAuthUser(res.data.user));
+            // });
+            if (res.data) {
+                // const { user, token } = res.data;
+                const {access, refresh} = res.data;
+                const user = res.config.data;
+                // Store token in localStorage or sessionStorage
+                localStorage.setItem('accesstoken', res.data.access);
+                localStorage.setItem('refreshtoken', JSON.stringify(res.data.refresh));
+                dispatch(setAuthUser(user));
                 console.log(res);
                 
                 navigate("/mainHome");
-                toast.success(res.data.user.userName);
+                toast.success(`Welcome`);
                 setInput({
                     email: "",
                     password: ""
@@ -44,7 +53,7 @@ function Login() {
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.response.data.message);
+            toast.error(error);
         } finally {
             setLoading(false);
         }
@@ -61,7 +70,7 @@ function Login() {
             <div className="background-text">hola</div>
             <div className="background-text2">hola</div>
 
-            <div className="form-container glass">
+            <div className="form-container">
                 <h1><span className="highlight">Hola</span> mi amigos</h1>
                 <form onSubmit={loginHandler}>
                     <input

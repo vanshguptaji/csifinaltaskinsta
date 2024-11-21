@@ -1,8 +1,17 @@
 import React from "react";
-import { AiOutlineBell } from "react-icons/ai"; // Notification icon
-import { FiSearch } from "react-icons/fi"; // Search icon
+import { AiOutlineBell } from "react-icons/ai"; 
+import { FiSearch } from "react-icons/fi"; 
+import { setAuthUser } from '@/redux/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { toast } from 'sonner'
 
 const Header = () => {
+
+  const { user } = useSelector(store => store.auth);
+  const dispatch = useDispatch();
+
   return (
     <header className="flex items-center justify-between bg-black px-6 py-4 border-b border-gray-800">
       <h1 className="text-7xl font-bold text-purple-400">hola'</h1>
@@ -22,7 +31,8 @@ const Header = () => {
         {/* Notification Icon */}
         <AiOutlineBell size={24} className="text-gray-400 cursor-pointer hover:text-white" />
         {/* Profile Avatar */}
-        <div className="h-10 w-10 rounded-full bg-gray-600 cursor-pointer"></div>
+        <div className="h-16 w-16 rounded-full bg-[url('../../images/rickandmorty3.jpg')] bg-cover cursor-pointer"></div>
+        {/* <p>@{user.full_name}</p> */}
       </div>
     </header>
   );
