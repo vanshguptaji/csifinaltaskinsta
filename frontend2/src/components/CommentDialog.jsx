@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Comment from './Comment'
 import axios from 'axios'
 import { toast } from 'sonner'
-// import { setPosts } from '@/redux/postSlice'
+import { setPosts } from '@/redux/postSlice'
+import rick from '../../images/rickandmorty2.jpg'
 
 const CommentDialog = ({ open, setOpen }) => {
   const [text, setText] = useState("");
@@ -59,11 +60,11 @@ const CommentDialog = ({ open, setOpen }) => {
 
   return (
     <Dialog open={open}>
-      <DialogContent onInteractOutside={() => setOpen(false)} className="max-w-5xl p-0 flex flex-col bg-sidebarGray">
+      <DialogContent onInteractOutside={() => setOpen(false)} className="max-w-5xl bg-sidebarGray p-0 flex flex-col">
         <div className='flex flex-1'>
           <div className='w-1/2'>
             <img
-              src={selectedPost?.image}
+              src="https://images.pexels.com/photos/744780/pexels-photo-744780.jpeg?auto=compress&cs=tinysrgb&w=600"
               alt="post_img"
               className='w-full h-full object-cover rounded-l-lg'
             />
@@ -73,7 +74,10 @@ const CommentDialog = ({ open, setOpen }) => {
               <div className='flex gap-3 items-center'>
                 <Link>
                   <Avatar>
-                    <AvatarImage src={selectedPost?.author?.profilePicture} />
+                    <AvatarImage 
+                    // src={selectedPost?.author?.profilePicture} 
+                    src = {rick}
+                    />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
                 </Link>
@@ -87,11 +91,11 @@ const CommentDialog = ({ open, setOpen }) => {
                 <DialogTrigger asChild>
                   <MoreHorizontal className='cursor-pointer' />
                 </DialogTrigger>
-                <DialogContent className="flex flex-col bg-sidebarGray items-center text-sm text-center">
-                  <div className='cursor-pointer w-full text-[#ED4956] font-bold'>
+                <DialogContent className="flex flex-col items-center bg-sidebarGray text-sm text-center">
+                  <div className='cursor-pointer w-full text-[#88069C] font-bold'>
                     Unfollow
                   </div>
-                  <div className='cursor-pointer w-full'>
+                  <div className='cursor-pointer w-full text-[#88069C] font-bold'>
                     Add to favorites
                   </div>
                 </DialogContent>
@@ -105,8 +109,16 @@ const CommentDialog = ({ open, setOpen }) => {
             </div>
             <div className='p-4'>
               <div className='flex items-center gap-2'>
-                <input type="text" value={text} onChange={changeEventHandler} placeholder='Add a comment...' className='w-full outline-none border text-sm border-gray-300 p-2 rounded' />
-                <Button disabled={!text.trim()} onClick={sendMessageHandler} variant="outline">Send</Button>
+                <input 
+                type="text" 
+                value={text} 
+                onChange={changeEventHandler} 
+                placeholder='Add a comment...' 
+                className='w-full outline-none border text-black font-bold text-sm border-gray-300 p-2 rounded' />
+                <Button 
+                disabled={!text.trim()} 
+                onClick={sendMessageHandler} 
+                >Send</Button>
               </div>
             </div>
           </div>

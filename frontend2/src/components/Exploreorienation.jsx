@@ -1,0 +1,22 @@
+import React from 'react'
+import Header from './Header'
+import Sidebar from './LeftSidebar'
+import Explore from './Explore'
+
+function Exploreorienation() {
+  return (
+    <div className="w-screen h-screen flex flex-col bg-sidebarGray text-white overflow-x-hidden">
+      <Header />
+
+      <div className="w-screen flex flex-grow bg-sidebarGray">
+        <Sidebar />
+
+        <div className="flex-grow p-4">
+          <Explore />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Exploreorienation

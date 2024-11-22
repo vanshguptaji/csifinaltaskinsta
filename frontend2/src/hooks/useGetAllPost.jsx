@@ -6,16 +6,20 @@ import { useDispatch } from "react-redux";
 
 const useGetAllPost = () => {
     const dispatch = useDispatch();
-    const access = localStorage.getItem("access");
+    const token = localStorage.getItem("accesstoken");
     useEffect(() => {
         const fetchAllPost = async () => {
             try {
                 const res = await axios.post('https://hola-project.onrender.com/api/posts/',{
-                        Authorization: `Bearer ${access}`,
-                });
-                if (res.data) {
-                    console.log(res.data);
-                    dispatch(setPosts(res.data.posts));
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                         withCredentials: true,
+                      },});
+                console.log(res);
+                
+                if (res) {
+                    console.log(res);
+                    // dispatch(setPosts(res.data.posts));
                 }
             } catch (error) {
                 console.log(error.message);

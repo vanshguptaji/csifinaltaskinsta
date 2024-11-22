@@ -16,12 +16,14 @@ import { useDispatch } from "react-redux";
 import { toast } from 'sonner';
 import { readFileAsDataURL } from "@/lib/utils";
 import { setPosts } from '@/redux/postSlice';
+import Notifications from "./Notification";
 
 
 const Sidebar = () => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const { user } = useSelector(store => store.auth)
+  const { user } = useSelector(store => store.auth);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -32,14 +34,18 @@ const Sidebar = () => {
   const [loading, setLoading] = useState(false);
   const { posts } = useSelector(store => store.post);
   const [input, setInput] = useState({
-    "content": "", 
-    "media": null, 
-    "tags": "" 
-});
+    "content": "",
+    "media": "",
+    "tags": ""
+  });
 
   const toggleCreateModal = () => {
     setIsCreateOpen((prev) => !prev);
     setSelectedFile(null);
+  };
+
+  const toggleNotificationModal = () => {
+    setIsNotificationOpen((prev) => !prev);
   };
 
   const handleFileChange = async (event) => {
@@ -51,6 +57,7 @@ const Sidebar = () => {
       setFile(file);
       const dataUrl = await readFileAsDataURL(file);
       setImagePreview(dataUrl);
+      // setInput({ ...input, media: dataUrl});
       console.log(file);
       console.log(imagePreview);
     }
@@ -73,16 +80,16 @@ const Sidebar = () => {
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
-}
+  }
 
   const createPostHandler = async (e) => {
-    
+
     const token = localStorage.getItem('accesstoken');
     // const formData = new FormData();
     // formData.append("caption", caption);
     // if (imagePreview) formData.append("image", file);
     console.log(input);
-    
+
     try {
       setLoading(true);
       const res = await axios.post('https://hola-project.onrender.com/api/posts/create/', input, {
@@ -93,7 +100,7 @@ const Sidebar = () => {
         // withCredentials: true,
       });
       console.log(res);
-      
+
       if (res) {
         dispatch(setPosts([res.data.post, ...posts]));// [1] -> [1,2] -> total element = 2
         toast.success("post created");
@@ -136,10 +143,12 @@ const Sidebar = () => {
             <AiOutlineMessage size={24} />
             Messages
           </Link>
-          <a href="/mainHome" className="flex items-center gap-3 text-lg">
+          <Link to="/explore" className="flex items-center gap-3 text-lg">
+          <a href="/explore" className="flex items-center gap-3 text-lg">
             <BsCompass size={24} />
             Explore
           </a>
+          </Link>
           <button
             onClick={() => {
               toggleCreateModal();
@@ -150,10 +159,13 @@ const Sidebar = () => {
             <FiPlusSquare size={24} />
             Create
           </button>
-          <a href="/" className="flex items-center gap-3 text-lg">
+          <button
+            onClick={toggleNotificationModal}
+            className="flex items-center gap-3 text-lg"
+          >
             <AiOutlineBell size={24} />
             Notifications
-          </a>
+          </button>
         </nav>
       </div>
 
@@ -194,7 +206,7 @@ const Sidebar = () => {
                       <img
                         src={URL.createObjectURL(selectedFile)}
                         alt="Selected file"
-                        value={input.media} 
+                        value={input.media}
                         name="media"
                         onChange={changeEventHandler}
                         className="w-full h-auto object-contain rounded-lg"
@@ -205,7 +217,7 @@ const Sidebar = () => {
                     <div className="w-1/2 space-y-4">
                       <textarea
                         placeholder="Add caption......"
-                        value={input.content} 
+                        value={input.content}
                         name="content"
                         onChange={changeEventHandler}
                         className="w-full p-2 bg-gray-700 text-gray-200 rounded-md outline-none resize-none"
@@ -213,7 +225,7 @@ const Sidebar = () => {
                       ></textarea>
                       <textarea
                         placeholder="Add your hashtags #......"
-                         value={input.tags} 
+                        value={input.tags}
                         name="tags"
                         onChange={changeEventHandler}
                         className="w-full p-2 bg-gray-700 text-gray-200 rounded-md outline-none resize-none"
@@ -261,7 +273,7 @@ const Sidebar = () => {
                 <div className="flex flex-col items-center justify-center h-2/3 border-2 border-dashed border-gray-500 rounded-lg p-6">
                   <div className="w-full h-48 flex justify-center items-center border-dashed border-2 border-gray-500 rounded-lg overflow-hidden">
                     <img
-                      src={lineiconsPhoto} // Default image
+                      src={lineiconsPhoto}
                       alt="Default"
                       className="w-full h-full object-contain"
                     />
@@ -278,8 +290,35 @@ const Sidebar = () => {
                     />
                   </label>
                 </div>
-              </>
+                </>
             )}
+          </div>
+        </div>
+      )}
+               {/* Notifications Modal */}
+      {isNotificationOpen && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
+          <div className="relative w-2/4 h-auto bg-gray-800 rounded-lg p-6 text-center shadow-lg">
+            <button
+              onClick={toggleNotificationModal}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+            <Notifications />
           </div>
         </div>
       )}

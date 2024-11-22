@@ -52,22 +52,22 @@ const PostCard = ({ image, author, caption }) => {
         <AiOutlineHeart size={24} className='cursor-pointer' />
         <AiOutlineComment size={24} onClick={() => setOpen(true)} className='cursor-pointer ' />
         <CommentDialog open={open} setOpen={setOpen} />
-        <div className='flex items-center justify-between'>
-          {/* <input
+        {/* <div className='flex items-center justify-between'>
+          <input
             type="text"
             placeholder='Add a comment...'
             value={text}
             onChange={changeEventHandler}
             className='outline-none text-sm w-full'
-          /> */}
-          {/* <span className='text-purple-600 cursor-pointer'>Post</span> */}
-          {/* {
+          />
+          <span className='text-purple-600 cursor-pointer'>Post</span>
+          {
                     text && <span
                     onClick={commentHandler} 
                     className='text-[#3BADF8] cursor-pointer'>Post</span>
-                } */}
+                }
 
-        </div>
+        </div> */}
         <FiSend size={24} className='cursor-pointer' />
       </div>
     </div>

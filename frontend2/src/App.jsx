@@ -5,6 +5,10 @@ import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import App2 from './App2';
 import Chatbox from './components/Chatbox';
+import ProfilePage from './components/Profilepage';
+import Explore from './components/Explore';
+import Notifications from './components/Notification';
+import Exploreorienation from './components/Exploreorienation';
 // import { Toaster } from './components/ui/sonner';
 
 const router = createBrowserRouter([
@@ -28,6 +32,14 @@ const router = createBrowserRouter([
   {
     path: "chatbox",
     element: <Chatbox />,
+  },
+  {
+    path: "profile",
+    element: <ProfilePage />,
+  },
+  {
+    path: "explore",
+    element: <Exploreorienation />,
   },
 ]);
 
