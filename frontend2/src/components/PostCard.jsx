@@ -22,7 +22,7 @@ const PostCard = ({ image, author, caption }) => {
   }
 
   return (
-    <div className="w-max h-auto rounded-lg bg-postcardGray shadow-md mb-6 p-4">
+    <div className="max-w-fit h-auto rounded-lg bg-postcardGray shadow-md mb-6 p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center mb-4">
           <div className="h-16 w-16 rounded-full bg-[url('../../images/rickandmorty2.jpg')] bg-cover cursor-pointer"></div>

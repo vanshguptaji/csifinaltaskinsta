@@ -32,7 +32,7 @@ function Explore() {
     };
     return (
         <>
-            <div className="max-h-lvh bg-sidebarGray mr-10 text-white flex">
+            <div className="max-h-lvh bg-black mr-10 text-white flex">
                 <div className="flex-1">
                     <main className="p-6">
                         <div

@@ -4,7 +4,7 @@ import postSlice from './postSlice.js';
 import socketSlice from "./socketSlice.js"
 import chatSlice from "./chatSlice.js";
 import rtnSlice from "./rtnSlice.js";
-
+import profileSlice from "./profileSlice.js"
 import { 
     persistReducer,
     FLUSH,
@@ -26,13 +26,14 @@ const persistConfig = {
 const rootReducer = combineReducers({
     auth:authSlice,
     post:postSlice,
-    socketio:socketSlice,
-    chat:chatSlice,
-    realTimeNotification:rtnSlice
+    // socketio:socketSlice,
+    // chat:chatSlice,
+    // realTimeNotification:rtnSlice,
+    profile: profileSlice,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
-
+//h
 const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>

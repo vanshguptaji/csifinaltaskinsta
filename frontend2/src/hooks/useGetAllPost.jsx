@@ -1,20 +1,26 @@
 import { setPosts } from "@/redux/postSlice";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 
 const useGetAllPost = () => {
     const dispatch = useDispatch();
     const token = localStorage.getItem("accesstoken");
+    const [input, setInput] =   useState({
+        is_public: true,
+    })
     useEffect(() => {
         const fetchAllPost = async () => {
             try {
-                const res = await axios.post('https://hola-project.onrender.com/api/posts/',{
+                const res = await axios.post('https://hola-project.onrender.com/api/posts/', input,
+                    {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                         withCredentials: true,
-                      },});
+                        //  withCredentials: true,
+                      },
+                      Authorization: `Bearer ${token}`,
+                    });
                 console.log(res);
                 
                 if (res) {
@@ -25,7 +31,7 @@ const useGetAllPost = () => {
                 console.log(error.message);
             }
         }
-        fetchAllPost();
+        // fetchAllPost();
     }, []);
 };
 export default useGetAllPost;

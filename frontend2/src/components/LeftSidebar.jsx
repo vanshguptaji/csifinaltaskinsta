@@ -102,7 +102,7 @@ const Sidebar = () => {
       console.log(res);
 
       if (res) {
-        dispatch(setPosts([res.data.post, ...posts]));// [1] -> [1,2] -> total element = 2
+        dispatch(setPosts([res.data, ...posts]));// [1] -> [1,2] -> total element = 2
         toast.success("post created");
         setOpen(false);
       }
