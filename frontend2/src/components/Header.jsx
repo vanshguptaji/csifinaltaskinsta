@@ -43,7 +43,9 @@ const Header = () => {
             <AiOutlineBell size={24} />
           </button>
         {/* Profile Avatar */}
+        <Link to="/profile">
         <div className="h-16 w-16 rounded-full bg-[url('../../images/rickandmorty3.jpg')] bg-cover cursor-pointer"></div>
+        </Link>
         {/* <p>@{user.full_name}</p> */}
       </div>
       {isNotificationOpen && (

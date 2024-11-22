@@ -8,10 +8,10 @@ import useGetAllPost from "./hooks/useGetAllPost";
 function App2() {
   useGetAllPost();
   return (
-    <div className="w-screen h-screen flex flex-col bg-sidebarGray text-white overflow-x-hidden">
+    <div className="w-screen h-screen flex flex-col bg-black text-white overflow-x-hidden">
       <Header />
 
-      <div className="w-screen flex flex-grow bg-sidebarGray">
+      <div className="w-screen flex flex-grow bg-black">
         <Sidebar />
 
         <div className="flex-grow p-4">

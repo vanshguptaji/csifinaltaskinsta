@@ -9,6 +9,7 @@ import ProfilePage from './components/Profilepage';
 import Explore from './components/Explore';
 import Notifications from './components/Notification';
 import Exploreorienation from './components/Exploreorienation';
+import Profileorient from './components/Profileorient';
 // import { Toaster } from './components/ui/sonner';
 
 const router = createBrowserRouter([
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
   },
   {
     path: "profile",
-    element: <ProfilePage />,
+    element: <Profileorient/>,
   },
   {
     path: "explore",

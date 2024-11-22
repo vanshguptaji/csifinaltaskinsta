@@ -133,7 +133,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="w-1/5 min-w-max bg-sidebarGray h-full flex flex-col items-center py-6">
+      <div className="w-1/5 min-w-max bg-black h-full flex flex-col items-center py-6">
         <nav className="space-y-6">
           <Link to="/mainHome" className="flex items-center gap-3 text-lg">
             <AiOutlineHome size={24} />
