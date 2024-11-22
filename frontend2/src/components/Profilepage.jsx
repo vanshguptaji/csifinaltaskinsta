@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { fetchUserProfile } from "@/redux/profileActions";
 import { fetchUserProfile } from "@/hooks/profileActions.js";
 import HotTopics from "./Hottopics.jsx";
+import Loader from "./Loader.jsx";
 
 const posts = [
     {
@@ -68,7 +69,7 @@ const ProfilePage = () => {
     }, [dispatch]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <Loader/>;
     }
 
     if (error) {
