@@ -74,7 +74,7 @@ function Signup() {
 
     return (
         <>
-            <div>
+            <div className='overflow-y-hidden'>
                 <div class="background-text">hola</div>
                 <div class="background-text2">hola</div>
 

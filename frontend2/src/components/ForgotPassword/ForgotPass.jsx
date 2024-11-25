@@ -4,14 +4,20 @@ import { toast } from 'sonner';
 import axios from 'axios';
 
 function ForgotPass() {
-    const [email, setEmail] = useState("");
+    const [input, setInput] = useState({
+        email: "",
+    });
     const [loading, setLoading] = useState(false);
+
+    const changeEventHandler = (e) => {
+        setInput({...input, [e.target.name]: e.target.value });
+    }
 
     const otpSender = async (e) => {
         e.preventDefault();
         try {
             setLoading(true); // Correctly setting the loading state
-            const res = await axios.post('http://hola-project.onrender.com/api/auth/forgot-password/', { email });
+            const res = await axios.post('http://hola-project.onrender.com/api/auth/forgot-password/',{email: input.email }, {});
 
             if (res) {
                 toast.success(`Enter the OTP sent to your email.`);
@@ -45,8 +51,8 @@ function ForgotPass() {
                         type="email"
                         id="email"
                         name="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)} // Fixed the onChange handler
+                        value={input.email}
+                        onChange={changeEventHandler} // Fixed the onChange handler
                         placeholder="Enter your Email"
                         required
                     />

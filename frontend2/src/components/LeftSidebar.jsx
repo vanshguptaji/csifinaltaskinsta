@@ -50,18 +50,21 @@ const Sidebar = () => {
 
   const handleFileChange = async (event) => {
     const file = event.target.files?.[0];
-    setSelectedFile(file);
-    console.log("Selected file:", file);
-    setFile(file);
     if (file) {
-      setFile(file);
-      const dataUrl = await readFileAsDataURL(file);
-      setImagePreview(dataUrl);
-      // setInput({ ...input, media: dataUrl});
-      console.log(file);
-      console.log(imagePreview);
+      setSelectedFile(file);
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result);
+      };
+      reader.onerror = (error) => {
+        console.error("Error reading file:", error);
+        toast.error("Error loading image. Please try again.");
+      };
+      reader.readAsDataURL(file); // Convert file to Base64 data URL
     }
   };
+
 
   const logoutHandler = async () => {
     try {
@@ -85,14 +88,18 @@ const Sidebar = () => {
   const createPostHandler = async (e) => {
 
     const token = localStorage.getItem('accesstoken');
-    // const formData = new FormData();
-    // formData.append("caption", caption);
-    // if (imagePreview) formData.append("image", file);
+    const formData = new FormData();
+    formData.append("content", input.content);
+    formData.append("media", selectedFile);
+    formData.append("tags", input.tags)
+    console.log(formData);
+    // setInput.media(file);
     console.log(input);
+
 
     try {
       setLoading(true);
-      const res = await axios.post('https://hola-project.onrender.com/api/posts/create/', input, {
+      const res = await axios.post('https://hola-project.onrender.com/api/posts/create/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
@@ -144,10 +151,10 @@ const Sidebar = () => {
             Messages
           </Link>
           <Link to="/explore" className="flex items-center gap-3 text-lg">
-          <a href="/explore" className="flex items-center gap-3 text-lg">
-            <BsCompass size={24} />
-            Explore
-          </a>
+            <a href="/explore" className="flex items-center gap-3 text-lg">
+              <BsCompass size={24} />
+              Explore
+            </a>
           </Link>
           <button
             onClick={() => {
@@ -204,11 +211,8 @@ const Sidebar = () => {
                     {/* Uploaded Image Preview */}
                     <div className="w-1/2">
                       <img
-                        src={URL.createObjectURL(selectedFile)}
-                        alt="Selected file"
-                        value={input.media}
-                        name="media"
-                        onChange={changeEventHandler}
+                        src={imagePreview}
+                        alt="Selected file preview"
                         className="w-full h-auto object-contain rounded-lg"
                       />
                     </div>
@@ -290,18 +294,18 @@ const Sidebar = () => {
                     />
                   </label>
                 </div>
-                </>
+              </>
             )}
           </div>
         </div>
       )}
-               {/* Notifications Modal */}
+      {/* Notifications Modal */}
       {isNotificationOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
-          <div className="relative w-2/4 h-auto bg-gray-800 rounded-lg p-6 text-center shadow-lg">
+          <div className="relative w-2/4 h-auto rounded-lg p-6 text-center shadow-lg">
             <button
               onClick={toggleNotificationModal}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-300"
+              className="absolute top-10 right-9 text-gray-500 hover:text-gray-300"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

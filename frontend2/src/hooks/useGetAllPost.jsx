@@ -2,6 +2,7 @@ import { setPosts } from "@/redux/postSlice";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 
 const useGetAllPost = () => {
@@ -23,12 +24,15 @@ const useGetAllPost = () => {
                     });
                 console.log(res);
                 
-                if (res) {
+                if (res.data) {
                     console.log(res);
-                    // dispatch(setPosts(res.data.posts));
+                    console.log("fetched all posts successfully");
+                    
+                    dispatch(setPosts(res.data));
                 }
             } catch (error) {
                 console.log(error.message);
+                toast.error("Failed to fetch posts");
             }
         }
         // fetchAllPost();

@@ -10,6 +10,7 @@ import Explore from './components/Explore';
 import Notifications from './components/Notification';
 import Exploreorienation from './components/Exploreorienation';
 import Profileorient from './components/Profileorient';
+import ForgotPass from './components/ForgotPassword/ForgotPass';
 // import { Toaster } from './components/ui/sonner';
 
 const router = createBrowserRouter([
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "explore",
     element: <Exploreorienation />,
+  },
+  {
+    path: "forgotpassword",
+    element: <ForgotPass/>,
   },
 ]);
 

@@ -7,7 +7,6 @@ import { toast } from 'sonner';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthUser } from '@/redux/authSlice';
-
 function Login() {
     const [input, setInput] = useState({
         email: "",
@@ -26,13 +25,14 @@ function Login() {
         e.preventDefault();
         try {    //https://socialnetworkingsite.onrender.com
             setLoading(true);
-            const res = await axios.post('https://hola-project.onrender.com/api/auth/login/', input,
-            );
+            const res = await axios.post('https://hola-project.onrender.com/api/auth/login/', input,{
+                // withCredentials: true,
+            } );
                 // , {
                 // headers: {
                 //     'Content-Type': 'application/json'
                 // },
-                // withCredentials: trueh
+                // withCredentials: true,
             // });
             if (res.data) {
                 // const { user, token } = res.data;
@@ -92,7 +92,9 @@ function Login() {
                         required
                     />
                     <div className="forgottext">
+                        <Link to="/forgotpassword">
                         <a href="">Forgot Password?</a>
+                        </Link>
                     </div>
 
                         <button className="signup-btn" type="submit" disabled={loading}>

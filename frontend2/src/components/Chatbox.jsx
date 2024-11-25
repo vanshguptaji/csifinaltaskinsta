@@ -1,17 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
-import Sidebar from "./LeftSidebar";
 
 const Chatbox = () => {
+  const [messages, setMessages] = useState([
+    {
+      sender: "friend",
+      text: "Yeah, I did! I went with a few friends. It was pretty good but kind of predictable, you know?",
+    },
+    {
+      sender: "me",
+      text: "I get what you mean.",
+    },
+    {
+      sender: "me",
+      text: "The special effects were amazing though! I couldn’t stop staring at the scenes with the spaceships. The detail was insane!",
+    },
+    {
+      sender: "friend",
+      text: "Totally! The space battles were definitely the highlight. The storyline, though... I felt like I'd seen it all before.",
+    },
+  ]);
+  const [inputValue, setInputValue] = useState("");
+
+  // Handle input change
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  // Handle message sending
+  const handleSendMessage = () => {
+    if (inputValue.trim()) {
+      setMessages([...messages, { sender: "me", text: inputValue }]);
+      setInputValue(""); // Clear the input field after sending
+    }
+  };
+
+  // Handle "Enter" key press to send the message
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSendMessage();
+    }
+  };
+
   return (
     <div className="w-screen h-screen pt-0 overflow-x-hidden">
-      <div className="">
+      <div>
         <Header />
         <div className="flex h-full bg-[url('../../images/chatbox_bg.png')] bg-contain text-white overflow-hidden">
           {/* Sidebar */}
-          
-          {/* Chat List */}
-          <div className="w-1/4 bg-sidebarGray p-4 overflow-hidden">
+          <div className="w-3/12 bg-sidebarGray p-4 overflow-hidden">
             <h2 className="text-lg font-semibold mb-4">Chats</h2>
             <div className="space-y-4">
               {Array(10)
@@ -57,31 +94,24 @@ const Chatbox = () => {
             {/* Chat Messages */}
             <div className="flex-1 overflow-y-auto p-6 bg-chat-pattern bg-cover">
               <div className="space-y-4">
-                {/* Sender Message */}
-                <div className="flex justify-start">
-                  <div className="max-w-xs bg-purple-600 p-3 rounded-lg text-sm">
-                    Yeah, I did! I went with a few friends. It was pretty good but
-                    kind of predictable, you know?
+                {messages.map((message, index) => (
+                  <div
+                    key={index}
+                    className={`flex ${
+                      message.sender === "me" ? "justify-end" : "justify-start"
+                    }`}
+                  >
+                    <div
+                      className={`max-w-xs p-3 rounded-lg text-sm ${
+                        message.sender === "me"
+                          ? "bg-gray-700"
+                          : "bg-purple-600"
+                      }`}
+                    >
+                      {message.text}
+                    </div>
                   </div>
-                </div>
-                {/* Receiver Message */}
-                <div className="flex justify-end">
-                  <div className="max-w-xs bg-gray-700 p-3 rounded-lg text-sm">
-                    I get what you mean.
-                  </div>
-                </div>
-                <div className="flex justify-end">
-                  <div className="max-w-xs bg-gray-700 p-3 rounded-lg text-sm">
-                    The special effects were amazing though! I couldn’t stop staring
-                    at the scenes with the spaceships. The detail was insane!
-                  </div>
-                </div>
-                <div className="flex justify-start">
-                  <div className="max-w-xs bg-purple-600 p-3 rounded-lg text-sm">
-                    Totally! The space battles were definitely the highlight. The
-                    storyline, though... I felt like I'd seen it all before.
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -94,8 +124,14 @@ const Chatbox = () => {
                 type="text"
                 placeholder="Type a message..."
                 className="flex-1 bg-gray-700 p-2 rounded-lg text-sm text-gray-300 outline-none focus:ring-2 focus:ring-purple-600"
+                value={inputValue}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyPress}
               />
-              <button className="p-2 bg-purple-600 text-white rounded-full hover:bg-purple-500">
+              <button
+                className="p-2 bg-purple-600 text-white rounded-full hover:bg-purple-500"
+                onClick={handleSendMessage}
+              >
                 <i className="fas fa-paper-plane"></i>
               </button>
             </div>

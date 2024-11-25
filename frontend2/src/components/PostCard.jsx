@@ -8,7 +8,7 @@ import { Button } from './ui/button';
 import rickandmorty from '../../images/rickandmorty.webp'
 import CommentDialog from './CommentDialog';
 
-const PostCard = ({ image, author, caption }) => {
+const PostCard = ({ image, author, content }) => {
   const [text, setText] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -38,7 +38,7 @@ const PostCard = ({ image, author, caption }) => {
             } */}
             <Button variant='ghost' className="cursor-pointer w-fit text-purple-600 font-bold hover:text-black hover:bg-purple-400">Add to favorites</Button>
             <Button variant='ghost' className="cursor-pointer w-fit text-purple-600 font-bold hover:text-black hover:bg-purple-400">follow</Button>
-            <Button variant='ghost' className="cursor-pointer w-fit text-purple-600 font-bold hover:text-black hover:bg-purple-400">Delete</Button>
+            <Button variant='ghost' className="cursor-pointer w-fit text-red-600 font-bold hover:text-black hover:bg-red-600">Delete</Button>
             <Button variant='ghost' className="cursor-pointer w-fit text-purple-600 font-bold hover:text-black hover:bg-purple-400">Unfollow</Button>
             {/* {
               user && user?._id === post?.author._id && <Button onClick={deletePostHandler} variant='ghost' className="cursor-pointer w-fit">Delete</Button>
@@ -46,7 +46,7 @@ const PostCard = ({ image, author, caption }) => {
           </DialogContent>
         </Dialog>
       </div>
-      <p className="mb-2">{caption}</p>
+      <p className="mb-2">{content}</p>
       <img src={image} alt="Post" className="rounded-md mb-4" />
       <div className="flex items-center gap-4">
         <AiOutlineHeart size={24} className='cursor-pointer' />
