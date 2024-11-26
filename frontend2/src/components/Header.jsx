@@ -102,7 +102,7 @@ const Header = () => {
         </button>
         {/* Profile Avatar */}
         <Link to="/profile">
-          <div className="h-16 w-16 rounded-full bg-[url('src/assets/images/rickandmorty3.jpg')] bg-cover cursor-pointer"></div>
+          <div className="h-16 w-16 rounded-full bg-[url('images/rickandmorty3.jpg')] bg-cover cursor-pointer"></div>
         </Link>
       </div>
 

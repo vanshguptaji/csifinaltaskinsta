@@ -27,8 +27,8 @@ function Login() {
         e.preventDefault();
         try {    //https://socialnetworkingsite.onrender.com
             setLoading(true);
-            const res = await axios.post('https://socialnetworkingsite.onrender.com/auth/login', input,{
-                withCredentials: true,
+            const res = await axios.post('https://hola-project.onrender.com/api/auth/login/', input,{
+                // withCredentials: true,
             } );
                 // , {
                 // headers: {

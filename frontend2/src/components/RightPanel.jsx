@@ -27,7 +27,7 @@ const RightPanel = () => {
                         <div className='flex flex-col items-center space-y-3'>
                             <div
                                 key={i}
-                                className="h-14 w-14 rounded-full bg-[url('src/assets/images/rickandmorty3.jpg')] bg-cover"
+                                className="h-14 w-14 rounded-full bg-[url('images/rickandmorty3.jpg')] bg-cover"
                             >
                             </div>
                             <div>@User</div>
@@ -46,7 +46,7 @@ const RightPanel = () => {
                             className="flex items-center justify-between bg-sidebarGray p-3 rounded-lg"
                         >
                             <div className='flex items-center gap-4'>
-                                <div className="h-16 w-16 rounded-full bg-[url('src/assets/images/rickandmorty3.jpg')] bg-cover cursor-pointer"></div>
+                                <div className="h-16 w-16 rounded-full bg-[url('images/rickandmorty3.jpg')] bg-cover cursor-pointer"></div>
                                 <span className="font-semibold">Rick {i + 1}</span>
                             </div>
                             <button className="bg-purple-600 py-1 px-3 rounded-lg text-sm">

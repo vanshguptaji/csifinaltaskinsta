@@ -46,7 +46,7 @@ const Chatbox = () => {
     <div className="w-screen h-screen pt-0 overflow-x-hidden">
       <div>
         <Header />
-        <div className="flex h-full bg-[url('src/assets/images/chatbox_bg.png')] bg-contain text-white overflow-hidden">
+        <div className="flex h-full bg-[url('src/images/chatbox_bg.png')] bg-contain text-white overflow-hidden">
           {/* Sidebar */}
           <div className="w-3/12 bg-sidebarGray p-4 overflow-hidden">
             <h2 className="text-lg font-semibold mb-4">Chats</h2>

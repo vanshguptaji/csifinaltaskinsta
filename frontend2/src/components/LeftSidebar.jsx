@@ -7,7 +7,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { BsCompass } from "react-icons/bs";
 import { FiPlusSquare } from "react-icons/fi";
-import lineiconsPhoto from "../assets/images/lineicons_photos.png";
+import lineiconsPhoto from "../images/lineicons_photos.png";
 import { useSelector } from "react-redux";
 import store from "@/redux/store";
 import axios from "axios";
