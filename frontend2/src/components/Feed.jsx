@@ -2,7 +2,7 @@ import React from 'react';
 import PostCard from './Postcard';
 import { useSelector } from 'react-redux';
 import store from '@/redux/store';
-import rickandmorty from '../../images/rickandmorty.webp'
+// import rickandmorty from '../../images/rickandmorty.webp'
 
 const Feed = () => {
   const posts = [

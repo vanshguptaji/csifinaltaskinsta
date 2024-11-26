@@ -9,7 +9,7 @@ import Comment from './Comment'
 import axios from 'axios'
 import { toast } from 'sonner'
 import { setPosts } from '@/redux/postSlice'
-import rick from '../../images/rickandmorty2.jpg'
+import rick from '../assets/images/rickandmorty2.jpg'
 
 const CommentDialog = ({ open, setOpen }) => {
   const [text, setText] = useState("");

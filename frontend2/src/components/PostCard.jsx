@@ -5,7 +5,7 @@ import { FiSend } from 'react-icons/fi';
 import { Dialog, DialogTrigger, DialogDescription, DialogContent } from './ui/dialog';
 import { MoreHorizontal } from 'lucide-react';
 import { Button } from './ui/button';
-import rickandmorty from '../../images/rickandmorty.webp'
+// import rickandmorty from '../../images/rickandmorty.webp'
 import CommentDialog from './CommentDialog';
 
 const PostCard = ({ image, author, content }) => {
@@ -25,7 +25,7 @@ const PostCard = ({ image, author, content }) => {
     <div className="max-w-fit h-auto rounded-lg bg-postcardGray shadow-md mb-6 p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center mb-4">
-          <div className="h-16 w-16 rounded-full bg-[url('../../images/rickandmorty2.jpg')] bg-cover cursor-pointer"></div>
+          <div className="h-16 w-16 rounded-full bg-[url('src/assets/images/rickandmorty2.jpg')] bg-cover cursor-pointer"></div>
           <h4 className="ml-3 font-semibold cursor-pointer">{author}</h4>
         </div>
         <Dialog className=''>

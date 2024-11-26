@@ -2,10 +2,10 @@ import React from 'react';
 
 const HotTopics = () => {
   const topics = [
-    { id: 1, name: 'Alanna Myassa', image: 'https://via.placeholder.com/40' },
-    { id: 2, name: 'Alanna Myassa', image: 'https://via.placeholder.com/40' },
-    { id: 3, name: 'Alanna Myassa', image: 'https://via.placeholder.com/40' },
-    { id: 4, name: 'Alanna Myassa', image: 'https://via.placeholder.com/40' },
+    { id: 1, name: 'Alanna Myassa', image: 'src/assets/images/rickandmorty3.jpg' },
+    { id: 2, name: 'Alanna Myassa', image: 'src/assets/images/rickandmorty3.jpg' },
+    { id: 3, name: 'Alanna Myassa', image: 'src/assets/images/rickandmorty3.jpg' },
+    { id: 4, name: 'Alanna Myassa', image: 'src/assets/images/rickandmorty3.jpg' },
   ];
 
   return (

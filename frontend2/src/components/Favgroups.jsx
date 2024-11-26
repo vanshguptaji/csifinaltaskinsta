@@ -1,12 +1,12 @@
 import React from 'react'
 const Favgroups = () => {
     const topics = [
-        { id: 1, name: 'Time Management', image: 'https://via.placeholder.com/40' },
-        { id: 2, name: 'Audio Books', image: 'https://via.placeholder.com/40' },
-        { id: 3, name: 'Sports', image: 'https://via.placeholder.com/40' },
-        { id: 4, name: 'Cooking at home', image: 'https://via.placeholder.com/40' },
-        { id: 5, name: 'Freedom of Soul', image: 'https://via.placeholder.com/40' },
-        { id: 6, name: 'Faming', image: 'https://via.placeholder.com/40' },
+        { id: 1, name: 'Time Management', image: 'src/assets/images/rickandmorty3.jpg' },
+        { id: 2, name: 'Audio Books', image: 'src/assets/images/rickandmorty3.jpg' },
+        { id: 3, name: 'Sports', image: 'src/assets/images/rickandmorty3.jpg' },
+        { id: 4, name: 'Cooking at home', image: 'src/assets/images/rickandmorty3.jpg' },
+        { id: 5, name: 'Freedom of Soul', image: 'src/assets/images/rickandmorty3.jpg' },
+        { id: 6, name: 'Faming', image: 'src/assets/images/rickandmorty3.jpg' },
       ];
   return (
     <div className="bg-black text-white p-4 rounded-lg shadow-md max-w-lg mx-auto">

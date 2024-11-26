@@ -5,7 +5,7 @@ import { FaInstagram, FaFacebook, FaEdit, FaEnvelope } from 'react-icons/fa';
 import { MdEdit } from "react-icons/md";
 import Hottopics from "../components/Hottopics.jsx";
 import store from '@/redux/store';
-import rickandmorty from '../../images/rickandmorty.webp'
+import rickandmorty from '../assets/images/rickandmorty.webp'
 import Followings from "../components/Followings.jsx";
 import Addfriends from "../components/Addfriends.jsx";
 import Favgroups from "../components/Favgroups.jsx";

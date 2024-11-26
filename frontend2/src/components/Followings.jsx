@@ -1,13 +1,13 @@
 import React from 'react'
 const Followings = () => {
     const topics = [
-        { id: 1, name: 'Alanna Myassa', image: 'https://via.placeholder.com/40' },
-        { id: 2, name: 'Alanna Myassa', image: 'https://via.placeholder.com/40' },
-        { id: 3, name: 'Alanna Myassa', image: 'https://via.placeholder.com/40' },
-        { id: 4, name: 'Alanna Myassa', image: 'https://via.placeholder.com/40' },
+        { id: 1, name: 'Alanna Myassa', image: 'src/assets/images/rickandmorty3.jpg' },
+        { id: 2, name: 'Alanna Myassa', image: 'src/assets/images/rickandmorty3.jpg' },
+        { id: 3, name: 'Alanna Myassa', image: 'src/assets/images/rickandmorty3.jpg' },
+        { id: 4, name: 'Alanna Myassa', image: 'src/assets/images/rickandmorty3.jpg' },
     ];
     return (
-        <div className="bg-black text-white p-4 rounded-lg shadow-md max-w-lg mx-auto">
+        <div className="bg-black text-white p-4 rounded-lg shadow-md max-w-lg mx-auto border-2 border-solid border-purple-600 rounded-md p-2">
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold">Your Followings</h2>
