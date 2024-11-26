@@ -94,7 +94,7 @@ const ProfilePage = () => {
 
     useEffect(() => {
         dispatch(fetchUserProfile());
-        console.log(userProfile.id);
+        console.log(userProfile);
 
     }, [dispatch]);
 
@@ -102,6 +102,8 @@ const ProfilePage = () => {
         const fetchUserPosts = async () => {
             // setLoading(true);
             const token = localStorage.getItem("accesstoken");
+            dispatch(fetchUserProfile());
+            console.log(userProfile);
 
             try {
                 const response = await axios.get(`https://hola-project.onrender.com/api/accounts/profile/${userProfile.id}/posts/`, {
