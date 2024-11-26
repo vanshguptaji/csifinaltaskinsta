@@ -147,11 +147,25 @@ button:focus-visible {
     --chart-5: 340 75% 55%;
   }
 }
+/* Add to your index.css or global styles */
+.text-shadow {
+  text-shadow: 2px 4px 4px rgb(0, 0, 0); /* Customize as per your need */
+}
 @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+@layer utilities {
+  .stroke-text {
+    -webkit-text-stroke: 2rem #5E506C;
+    color: transparent;
+  }
+  .stroke-text2 {
+    -webkit-text-stroke: 1px #000;
+    color: transparent;
   }
 }
