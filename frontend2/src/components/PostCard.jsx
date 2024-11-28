@@ -1,11 +1,9 @@
-// import { Dialog, DialogTrigger } from '@radix-ui/react-dialog';
 import React, { useState } from 'react';
 import { AiOutlineHeart, AiOutlineComment } from 'react-icons/ai';
 import { FiSend } from 'react-icons/fi';
 import { Dialog, DialogTrigger, DialogDescription, DialogContent } from './ui/dialog';
 import { MoreHorizontal } from 'lucide-react';
 import { Button } from './ui/button';
-// import rickandmorty from '../../images/rickandmorty.webp'
 import CommentDialog from './CommentDialog';
 
 const PostCard = ({ image, author, content }) => {
@@ -22,11 +20,17 @@ const PostCard = ({ image, author, content }) => {
   }
 
   return (
-    <div className="max-w-fit h-auto rounded-lg bg-postcardGray shadow-md mb-6 p-4">
+    <div 
+    className="max-w-fit h-auto rounded-lg bg-postcardGray shadow-md mb-6 p-4    
+        max-w-[600px] 
+        2xl:min-w-screen
+        lg:max-w-[500px] 
+        md:max-w-[400px] 
+        sm:max-w-[auto]">
       <div className="flex items-center justify-between">
         <div className="flex items-center mb-4">
           <div className="h-16 w-16 rounded-full bg-[url('images/rickandmorty2.jpg')] bg-cover cursor-pointer"></div>
-          <h4 className="ml-3 font-semibold cursor-pointer">{author}</h4>
+          <h4 className="ml-3 font-semibold cursor-pointer text-sm sm:text-base">{author}</h4>
         </div>
         <Dialog className=''>
           <DialogTrigger asChild>
@@ -47,7 +51,7 @@ const PostCard = ({ image, author, content }) => {
         </Dialog>
       </div>
       <p className="mb-2">{content}</p>
-      <img src={image} alt="Post" className="rounded-md mb-4" />
+      <img src={image} alt="Post" className="rounded-md w-full max-h-[700px] object-cover sm:max-h-[250px] md:max-h-[400px] mb-4" />
       <div className="flex items-center gap-4">
         <AiOutlineHeart size={24} className='cursor-pointer' />
         <AiOutlineComment size={24} onClick={() => setOpen(true)} className='cursor-pointer ' />

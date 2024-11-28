@@ -139,3 +139,265 @@ const Header = () => {
 
 export default Header;
 
+
+
+
+// import React, { useState } from "react";
+// import { AiOutlineBell } from "react-icons/ai";
+// import { FiSearch } from "react-icons/fi";
+// import { Link } from "react-router-dom";
+// import Notifications from "./Notification";
+
+// const Header = () => {
+//   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+//   const [searchQuery, setSearchQuery] = useState("");
+//   const [searchResults, setSearchResults] = useState([]);
+//   const [loading, setLoading] = useState(false);
+
+//   const toggleNotificationModal = () => {
+//     setIsNotificationOpen((prev) => !prev);
+//   };
+
+//   const handleSearch = (e) => {
+//     const query = e.target.value;
+//     setSearchQuery(query);
+//     if (query.trim()) {
+//       // Simulated fetchUsers call
+//       setLoading(true);
+//       setTimeout(() => {
+//         setSearchResults([
+//           { full_name: "User One", avatar: "" },
+//           { full_name: "User Two", avatar: "" },
+//         ]);
+//         setLoading(false);
+//       }, 500);
+//     } else {
+//       setSearchResults([]);
+//     }
+//   };
+
+//   return (
+//     <header className="flex flex-col sm:flex-row items-center justify-between bg-black px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-800 gap-4 sm:gap-0">
+//       {/* Logo */}
+//       <h1 className="text-4xl sm:text-7xl font-bold text-purple-400">hola'</h1>
+
+//       {/* Search Bar */}
+//       <div className="relative flex flex-col items-start w-full sm:w-1/3">
+//         <div className="relative w-full">
+//           <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+//           <input
+//             type="text"
+//             value={searchQuery}
+//             onChange={handleSearch}
+//             placeholder="Search"
+//             className="w-full pl-10 py-2 rounded-full bg-gray-800 text-white text-sm focus:outline-none focus:ring focus:ring-purple-600"
+//           />
+//         </div>
+
+//         {/* Search Results Dropdown */}
+//         {searchQuery.trim() && (
+//           <div className="absolute z-10 w-full mt-2 bg-gray-900 rounded-lg shadow-lg">
+//             {loading ? (
+//               <p className="text-center text-gray-400 p-4">Loading...</p>
+//             ) : searchResults.length > 0 ? (
+//               searchResults.map((user, index) => (
+//                 <div
+//                   key={index}
+//                   className="flex items-center gap-3 p-3 hover:bg-gray-700 cursor-pointer"
+//                 >
+//                   <div className="h-8 w-8 rounded-full bg-gray-600">
+//                     <img
+//                       src={user.avatar || ""}
+//                       alt="User Avatar"
+//                       className="rounded-full object-cover w-full h-full"
+//                     />
+//                   </div>
+//                   <p className="text-white text-sm">{user.full_name}</p>
+//                 </div>
+//               ))
+//             ) : (
+//               <p className="text-center text-gray-400 p-4">No users found.</p>
+//             )}
+//           </div>
+//         )}
+//       </div>
+
+//       {/* Icons */}
+//       <div className="flex items-center gap-4">
+//         {/* Notification Icon */}
+//         <button
+//           onClick={toggleNotificationModal}
+//           className="flex items-center gap-2 text-lg text-white"
+//         >
+//           <AiOutlineBell size={20} />
+//         </button>
+//         {/* Profile Avatar */}
+//         <Link to="/profile">
+//           <div className="h-12 w-12 rounded-full bg-[url('images/rickandmorty3.jpg')] bg-cover cursor-pointer"></div>
+//         </Link>
+//       </div>
+
+//       {/* Notification Modal */}
+//       {isNotificationOpen && (
+//         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
+//           <div className="relative w-11/12 max-w-md bg-gray-800 rounded-lg p-6 text-center shadow-lg">
+//             <button
+//               onClick={toggleNotificationModal}
+//               className="absolute top-4 right-4 text-gray-500 hover:text-gray-300"
+//             >
+//               <svg
+//                 xmlns="http://www.w3.org/2000/svg"
+//                 className="h-6 w-6"
+//                 fill="none"
+//                 viewBox="0 0 24 24"
+//                 stroke="currentColor"
+//               >
+//                 <path
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                   strokeWidth="2"
+//                   d="M6 18L18 6M6 6l12 12"
+//                 />
+//               </svg>
+//             </button>
+//             <Notifications />
+//           </div>
+//         </div>
+//       )}
+//     </header>
+//   );
+// };
+
+// export default Header;
+
+
+
+// import React, { useState } from "react";
+// import { AiOutlineBell } from "react-icons/ai";
+// import { FiSearch } from "react-icons/fi";
+// import { Link } from "react-router-dom";
+// import Notifications from "./Notification";
+
+// const Header = () => {
+//   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+//   const [searchQuery, setSearchQuery] = useState("");
+//   const [searchResults, setSearchResults] = useState([]);
+//   const [loading, setLoading] = useState(false);
+
+//   const toggleNotificationModal = () => {
+//     setIsNotificationOpen((prev) => !prev);
+//   };
+
+//   const handleSearch = (e) => {
+//     const query = e.target.value;
+//     setSearchQuery(query);
+//     if (query.trim()) {
+//       setLoading(true);
+//       setTimeout(() => {
+//         setSearchResults([
+//           { full_name: "User One", avatar: "" },
+//           { full_name: "User Two", avatar: "" },
+//         ]);
+//         setLoading(false);
+//       }, 500);
+//     } else {
+//       setSearchResults([]);
+//     }
+//   };
+
+//   return (
+//     <header className="flex flex-col bg-black px-4 sm:px-6 py-3 border-b border-gray-800">
+//       {/* Top Row: Logo, Notifications, Profile */}
+//       <div className="flex items-center justify-between mb-3">
+//         <div className="flex items-center gap-6">
+//           {/* Logo */}
+//           <h1 className="text-4xl sm:text-5xl font-bold text-purple-400">hola'</h1>
+
+//           {/* Profile and Notification Icons */}
+//           <div className="flex items-center gap-4">
+//             {/* Notification Icon */}
+//             <button
+//               onClick={toggleNotificationModal}
+//               className="text-lg text-white flex items-center gap-2"
+//             >
+//               <AiOutlineBell size={20} />
+//             </button>
+
+//             {/* Profile Avatar */}
+//             <Link to="/profile">
+//               <div className="h-12 w-12 rounded-full bg-[url('images/rickandmorty3.jpg')] bg-cover cursor-pointer"></div>
+//             </Link>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Search Bar */}
+//       <div className="relative w-full">
+//         <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+//         <input
+//           type="text"
+//           value={searchQuery}
+//           onChange={handleSearch}
+//           placeholder="Search"
+//           className="w-full pl-10 py-2 rounded-full bg-gray-800 text-white text-sm focus:outline-none focus:ring focus:ring-purple-600"
+//         />
+//         {/* Search Results Dropdown */}
+//         {searchQuery.trim() && (
+//           <div className="absolute z-10 w-full mt-2 bg-gray-900 rounded-lg shadow-lg">
+//             {loading ? (
+//               <p className="text-center text-gray-400 p-4">Loading...</p>
+//             ) : searchResults.length > 0 ? (
+//               searchResults.map((user, index) => (
+//                 <div
+//                   key={index}
+//                   className="flex items-center gap-3 p-3 hover:bg-gray-700 cursor-pointer"
+//                 >
+//                   <div className="h-8 w-8 rounded-full bg-gray-600">
+//                     <img
+//                       src={user.avatar || ""}
+//                       alt="User Avatar"
+//                       className="rounded-full object-cover w-full h-full"
+//                     />
+//                   </div>
+//                   <p className="text-white text-sm">{user.full_name}</p>
+//                 </div>
+//               ))
+//             ) : (
+//               <p className="text-center text-gray-400 p-4">No users found.</p>
+//             )}
+//           </div>
+//         )}
+//       </div>
+
+//       {/* Notification Modal */}
+//       {isNotificationOpen && (
+//         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
+//           <div className="relative w-11/12 max-w-md bg-gray-800 rounded-lg p-6 text-center shadow-lg">
+//             <button
+//               onClick={toggleNotificationModal}
+//               className="absolute top-4 right-4 text-gray-500 hover:text-gray-300"
+//             >
+//               <svg
+//                 xmlns="http://www.w3.org/2000/svg"
+//                 className="h-6 w-6"
+//                 fill="none"
+//                 viewBox="0 0 24 24"
+//                 stroke="currentColor"
+//               >
+//                 <path
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                   strokeWidth="2"
+//                   d="M6 18L18 6M6 6l12 12"
+//                 />
+//               </svg>
+//             </button>
+//             <Notifications />
+//           </div>
+//         </div>
+//       )}
+//     </header>
+//   );
+// };
+
+// export default Header;
