@@ -5,6 +5,7 @@ import { Dialog, DialogTrigger, DialogDescription, DialogContent } from './ui/di
 import { MoreHorizontal } from 'lucide-react';
 import { Button } from './ui/button';
 import CommentDialog from './CommentDialog';
+import rickandmorty from '../images/rickandmorty.webp'
 
 const PostCard = ({ image, author, content }) => {
   const [text, setText] = useState("");
@@ -51,7 +52,7 @@ const PostCard = ({ image, author, content }) => {
         </Dialog>
       </div>
       <p className="mb-2">{content}</p>
-      <img src={image} alt="Post" className="rounded-md w-full max-h-[700px] object-cover sm:max-h-[250px] md:max-h-[400px] mb-4" />
+      <img src={image?image:rickandmorty} alt="Post" className="rounded-md w-full max-h-[700px] object-cover sm:max-h-[250px] md:max-h-[400px] mb-4" />
       <div className="flex items-center gap-4">
         <AiOutlineHeart size={24} className='cursor-pointer' />
         <AiOutlineComment size={24} onClick={() => setOpen(true)} className='cursor-pointer ' />

@@ -181,30 +181,32 @@ const Sidebar = () => {
         <div className="flex justify-around text-white">
           <Link to="/mainHome" className="flex flex-col items-center">
             <AiOutlineHome size={24} />
-            <span className="text-sm">Home</span>
+            {/* <span className="text-sm">Home</span> */}
           </Link>
           <Link to="/chatbox" className="flex flex-col items-center">
             <AiOutlineMessage size={24} />
-            <span className="text-sm">Messages</span>
+            {/* <span className="text-sm">Messages</span> */}
           </Link>
           <button
             onClick={toggleCreateModal}
             className="flex flex-col items-center"
           >
             <FiPlusSquare size={24} />
-            <span className="text-sm">Create</span>
+            {/* <span className="text-sm">Create</span> */}
           </button>
           <Link to="/explore" className="flex flex-col items-center">
             <BsCompass size={24} />
-            <span className="text-sm">Explore</span>
+            {/* <span className="text-sm">Explore</span> */}
           </Link>
           <button
             onClick={toggleNotificationModal}
             className="flex flex-col items-center"
           >
             <AiOutlineBell size={24} />
-            <span className="text-sm">Alerts</span>
+            {/* <span className="text-sm">Alerts</span> */}
           </button>
+          <Link to="/profile" className="h-8 w-8 rounded-full bg-[url('images/rickandmorty3.jpg')] bg-cover cursor-pointer">
+          </Link>
         </div>
       </div>
 

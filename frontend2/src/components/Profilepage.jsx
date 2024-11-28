@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserProfile } from "@/hooks/profileActions.js";
 import HotTopics from "./Hottopics.jsx";
 import Loader from "./Loader.jsx";
-// import rickandmorty from "../../images/rickandmorty.webp"
+// import rickandmorty from "../images/rickandmorty.webp"
 
 
 
@@ -122,7 +122,7 @@ const ProfilePage = () => {
         };
 
         fetchUserPosts();
-    }, [userProfile.id]);
+    }, []);
 
 
     if (loading) {
@@ -200,12 +200,10 @@ const ProfilePage = () => {
             <div className="h-screen flex flex-col bg-black text-white">
                 <div className="flex flex-1">
                     <div className="min-h-screen bg-black text-white p-6 flex-1">
-                        <div className="max-w-6xl mx-auto flex gap-6">
-                            <main className="flex-1 p-9 border-purple-400">
-                                <h1 className="text-2xl font-bold"></h1>
-                                <p className="text-gray-400"></p>
+                        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row gap-6">
+                            <main className="flex-1 p-4 sm:p-9 border-purple-400">
                                 <div className="flex flex-col items-center max-w-[900px] mx-auto bg-gray-900 text-white rounded-xl overflow-hidden shadow-lg">
-                                    <div className="w-full h-40 bg-cover bg-center">
+                                    <div className="w-full h-40 bg-cover bg-center sm:h-48">
                                         <img
                                             src={backgroundPhoto ? URL.createObjectURL(backgroundPhoto) : "https://via.placeholder.com/900x300"}
                                             alt="Background"
@@ -213,7 +211,7 @@ const ProfilePage = () => {
                                         />
                                     </div>
 
-                                    <div className="relative -mt-10 w-28 h-24 right-60">
+                                    <div className="relative -mt-10 w-20 h-20 sm:w-28 sm:h-28 mx-auto">
                                         <img
                                             src={profilePhoto ? URL.createObjectURL(profilePhoto) : "https://via.placeholder.com/150"}
                                             alt="Profile"
@@ -254,7 +252,7 @@ const ProfilePage = () => {
                                                     <FaEnvelope className="text-blue-400 hover:text-gray-300 cursor-pointer" />
                                                     <MdEdit className="text-gray-400 hover:text-gray-300 cursor-pointer" />
                                                 </div>
-                                                <div className="mt-5 grid grid-cols-3 gap-4 border-t border-gray-700">
+                                                <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-gray-700">
                                                     <div className="text-center">
                                                         <h3 className="font-bold text-lg">{userProfile?.num_posts}</h3>
                                                         <p className="text-gray-500">Posts</p>
@@ -297,7 +295,7 @@ const ProfilePage = () => {
                                             posts.map((post) => (
                                                 <PostCard
                                                     key={post.id}
-                                                    image={post.media ||rickandmorty}
+                                                    image={post.media ? post.media : rickandmorty}
                                                     author={`User ${post.created_by}`}
                                                     content={post.content}
                                                     likes={post.likes_count}
