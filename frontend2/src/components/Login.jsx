@@ -188,7 +188,7 @@ function Login() {
             const timer = setTimeout(() => {
                 setShowSplash(false);
                 localStorage.setItem('splashShown', 'true');
-            }, 9000);
+            }, 9500);
 
             return () => clearTimeout(timer);
         }
