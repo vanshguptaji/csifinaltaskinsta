@@ -246,13 +246,7 @@ const ProfilePage = () => {
                                         {posts.length > 0 ? (
                                             posts.map((post) => (
                                                 <PostCard
-                                                    key={post.id}
-                                                    image={post.media ? post.media : rickandmorty}
-                                                    author={`User ${post.created_by}`}
-                                                    content={post.content}
-                                                    likes={post.likes_count}
-                                                    comments={post.comments_count}
-                                                    time={new Date(post.created_at).toLocaleString()}
+                                                post={post}
                                                 />
                                             ))
                                         ) : (

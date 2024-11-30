@@ -153,7 +153,7 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -165,24 +165,45 @@ const Header = () => {
     try {
       setLoading(true);
       const response = await axios.get(`http://hola-project.onrender.com/api/accounts/search/?q=${query}`);
-      console.log(response); 
+      console.log(response);
       setSearchResults(response.data || []);
     } catch (error) {
       console.error("Error fetching users:", error);
-      setSearchResults([]); 
+      setSearchResults([]);
     } finally {
       setLoading(false);
     }
   };
-
-  const handleSearch = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-    if (query.trim()) {
-      fetchUsers(query);
-    } else {
-      setSearchResults([]); 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (searchQuery.length >= 3) {
+      try {
+        const response = await axios.get(`https://hola-project.onrender.com/api/accounts/search/?q=${searchQuery}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
+          }
+        });
+        console.log('Search API Response:', response.data); // Log the response from the API
+        setSearchResults(response.data.results);
+      } catch (error) {
+        console.error('Error searching users:', error);
+        if (error.response) {
+          console.error('Response data:', error.response.data);
+          console.error('Response status:', error.response.status);
+          console.error('Response headers:', error.response.headers);
+        } else if (error.request) {
+          console.error('Request data:', error.request);
+        } else {
+          console.error('Error message:', error.message);
+        }
+        console.error('Error config:', error.config);
+      }
     }
+  };
+  const handleUserClick = (user) => {
+    // navigate(`/user-profile/${user.id}`, { state: { userProfile: user } });
+    // setSearchResults([]);
+    // setSearchQuery('');
   };
 
   return (
@@ -196,17 +217,19 @@ const Header = () => {
       <div className="relative flex flex-col items-start w-full sm:w-1/3 mb-4 sm:mb-0">
         <div className="relative w-full">
           <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+          <form onSubmit={handleSearch} className="w-full relative">
           <input
             type="text"
+            placeholder="search"
             value={searchQuery}
-            onChange={handleSearch}
-            placeholder="Search"
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-10 py-2 rounded-full bg-gray-800 text-white focus:outline-none focus:ring focus:ring-purple-600"
           />
+          </form>
         </div>
 
         {/* Search Results Dropdown */}
-        {searchQuery.trim() && (
+        {/* {searchQuery.trim() && (
           <div className="absolute z-10 w-full mt-20 bg-gray-900 rounded-lg shadow-lg">
             {loading ? (
               <p className="text-center text-gray-400 p-4">Loading...</p>
@@ -230,7 +253,20 @@ const Header = () => {
               <p className="text-center text-gray-400 p-4">No users found.</p>
             )}
           </div>
-        )}
+        )} */}
+         {searchResults.length > 0 && (
+            <div className='absolute top-12 left-0 w-full bg-white text-black rounded-lg shadow-lg z-10'>
+              {searchResults.map(result => (
+                <div
+                  key={result.id}
+                  className='p-2 cursor-pointer hover:bg-gray-200'
+                  onClick={() => handleUserClick(result)}
+                >
+                  {result.username}
+                </div>
+              ))}
+            </div>
+          )}
       </div>
 
       {/* Icons */}

@@ -1,4 +1,4 @@
-import { setPosts } from "@/redux/postSlice";
+import { setAllPosts } from "@/redux/postSlice";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -20,7 +20,7 @@ const useGetAllPost = () => {
                         Authorization: `Bearer ${token}`,
                         //  withCredentials: true,
                       },
-                      Authorization: `Bearer ${token}`,
+                    //   Authorization: `Bearer ${token}`,
                     });
                 console.log(res);
                 
@@ -28,7 +28,7 @@ const useGetAllPost = () => {
                     console.log(res);
                     console.log("fetched all posts successfully");
                     
-                    dispatch(setPosts(res.data));
+                    dispatch(setAllPosts(res.data));
                 }
             } catch (error) {
                 console.log(error.message);

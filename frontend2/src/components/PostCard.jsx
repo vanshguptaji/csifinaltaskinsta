@@ -7,9 +7,13 @@ import { Button } from './ui/button';
 import CommentDialog from './CommentDialog';
 import rickandmorty from '../images/rickandmorty.webp'
 
-const PostCard = ({ image, author, content }) => {
+const PostCard = ({ post }) => {
   const [text, setText] = useState("");
   const [open, setOpen] = useState(false);
+  const [postTest,setPostTest] = useState(post);
+  
+
+  const BASE_URL = 'https://hola-project.onrender.com';
 
   const changeEventHandler = (e) => {
     const inputText = e.target.value;
@@ -19,7 +23,7 @@ const PostCard = ({ image, author, content }) => {
       setText("");
     }
   }
-
+  // {post.created_by?.profilePicture ? `${BASE_URL}${post.created_by.profilePicture}` : ''}
   return (
     <div 
     className="max-w-fit h-auto rounded-lg bg-postcardGray shadow-md mb-6 p-4    
@@ -31,7 +35,7 @@ const PostCard = ({ image, author, content }) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center mb-4">
           <div className="h-16 w-16 rounded-full bg-[url('images/rickandmorty2.jpg')] bg-cover cursor-pointer"></div>
-          <h4 className="ml-3 font-semibold cursor-pointer text-sm sm:text-base">{author}</h4>
+          <h4 className="ml-3 font-semibold cursor-pointer text-sm sm:text-base">{post.created_by?.username}</h4>
         </div>
         <Dialog className=''>
           <DialogTrigger asChild>
@@ -51,8 +55,13 @@ const PostCard = ({ image, author, content }) => {
           </DialogContent>
         </Dialog>
       </div>
-      <p className="mb-2">{content}</p>
-      <img src={image?image:rickandmorty} alt="Post" className="rounded-md w-full max-h-[700px] object-cover sm:max-h-[250px] md:max-h-[400px] mb-4" />
+      <p className="mb-2">{post.content}</p>
+      {post.media && (
+                <>
+                    {/* {console.log('Image URL:', post.media)} Log the image URL */}
+                    <img src={post.media} alt={post.content} className="rounded-md w-full max-h-[700px] object-cover sm:max-h-[250px] md:max-h-[400px] mb-4"/>
+                </>
+            )}
       <div className="flex items-center gap-4">
         <AiOutlineHeart size={24} className='cursor-pointer' />
         <AiOutlineComment size={24} onClick={() => setOpen(true)} className='cursor-pointer ' />
