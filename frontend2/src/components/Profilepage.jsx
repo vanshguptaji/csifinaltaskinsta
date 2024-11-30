@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import PostCard from "./PostCard.jsx";
 import Settings from "./Settings.jsx";
 import { FaInstagram, FaFacebook, FaEdit, FaEnvelope } from 'react-icons/fa';
@@ -17,55 +18,6 @@ import { fetchUserProfile } from "@/hooks/profileActions.js";
 import HotTopics from "./Hottopics.jsx";
 import Loader from "./Loader.jsx";
 // import rickandmorty from "../images/rickandmorty.webp"
-
-
-
-// const posts = [
-//     {
-//         image: "https://via.placeholder.com/600x300",
-//         time: "30 minutes ago",
-//         caption: "The Earth has music for those who listen",
-//         hashtags: "#NatureLovers #Explore #WildlifePhotography #MotherNature #NaturePerfection",
-//         likes: 1200,
-//         comments: 173,
-//         shares: 229,
-//         views: "1K+",
-//         isVideo: false,
-//     },
-//     {
-//         image: "https://via.placeholder.com/600x300",
-//         time: "50 minutes ago",
-//         caption: "The Earth has music for those who listen",
-//         hashtags: "#NatureLovers #Explore #WildlifePhotography #MotherNature #NaturePerfection",
-//         likes: 1200,
-//         comments: 173,
-//         shares: 229,
-//         views: "1K+",
-//         isVideo: true,
-//     },
-//     {
-//         image: "https://via.placeholder.com/600x300",
-//         time: "30 minutes ago",
-//         caption: "The Earth has music for those who listen",
-//         hashtags: "#NatureLovers #Explore #WildlifePhotography #MotherNature #NaturePerfection",
-//         likes: 1200,
-//         comments: 173,
-//         shares: 229,
-//         views: "1K+",
-//         isVideo: false,
-//     },
-//     {
-//         image: "https://via.placeholder.com/600x300",
-//         time: "50 minutes ago",
-//         caption: "The Earth has music for those who listen",
-//         hashtags: "#NatureLovers #Explore #WildlifePhotography #MotherNature #NaturePerfection",
-//         likes: 1200,
-//         comments: 173,
-//         shares: 229,
-//         views: "1K+",
-//         isVideo: true,
-//     },
-// ];
 
 const ProfilePage = () => {
     const dispatch = useDispatch();
@@ -197,21 +149,20 @@ const ProfilePage = () => {
 
     return (
         <>
-            <div className="h-screen flex flex-col bg-black text-white">
-                <div className="flex flex-1">
-                    <div className="min-h-screen bg-black text-white p-6 flex-1">
-                        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row gap-6">
-                            <main className="flex-1 p-4 sm:p-9 border-purple-400">
-                                <div className="flex flex-col items-center max-w-[900px] mx-auto bg-gray-900 text-white rounded-xl overflow-hidden shadow-lg">
-                                    <div className="w-full h-40 bg-cover bg-center sm:h-48">
+            <div className="min-h-screen bg-black text-white">
+                <div className="flex flex-col items-center w-full sm:p-6">
+                    <div className="min-h-screen bg-black text-white sm:p-6 flex-1">
+                        <div className="sm:max-w-6xl mx-auto flex flex-col sm:flex-row sm:gap-6">
+                            <main className="flex-1">
+                                <div className="flex flex-col items-center bg-gray-900 text-white rounded-xl overflow-hidden shadow-lg">
+                                    <div className="relative w-full h-40 sm:h-48">
                                         <img
                                             src={backgroundPhoto ? URL.createObjectURL(backgroundPhoto) : "https://via.placeholder.com/900x300"}
                                             alt="Background"
                                             className="w-full h-48 object-cover"
                                         />
                                     </div>
-
-                                    <div className="relative -mt-10 w-20 h-20 sm:w-28 sm:h-28 mx-auto">
+                                    <div className="relative -mt-12 w-24 h-24 sm:w-28 sm:h-28 mx-auto">
                                         <img
                                             src={profilePhoto ? URL.createObjectURL(profilePhoto) : "https://via.placeholder.com/150"}
                                             alt="Profile"
@@ -223,7 +174,7 @@ const ProfilePage = () => {
                                         <div className="flex flex-col md:flex-row md:space-x-8">
                                             <div className="p-4 text-left flex-1">
                                                 <div className="flex flex-col">
-                                                    <h1 className="text-xl font-bold">{userProfile?.username || "No username available"}</h1>
+                                                    <h1 className="text-xl sm:text-xl font-bold">{userProfile?.username || "No username available"}</h1>
                                                     <p className="text-sm text-gray-400 mt-2">
                                                         {userProfile?.bio || "No bio available"}
                                                     </p>
@@ -232,7 +183,7 @@ const ProfilePage = () => {
                                                     </p>
                                                     <div className="mt-5 flex justify-start">
                                                         <button
-                                                            className="px-4 py-2 bg-gray-900 border-b-2 border-purple-400 text-white rounded-full hover:bg-purple-600"
+                                                            className="px-3 py-2 bg-gray-900 border-b-2 border-purple-400 text-white rounded-full hover:bg-purple-600"
                                                             onClick={toggleNotificationModal}
                                                         >
                                                             Profile Settings
@@ -245,7 +196,7 @@ const ProfilePage = () => {
                                                 </div>
                                             </div>
 
-                                            <div className="flex-1 p-4">
+                                            <div className="w-full flex-1 p-4">
                                                 <div className="flex justify-end space-x-4 text-xl mb-4">
                                                     <FaInstagram className="text-pink-400 hover:text-purple-300 cursor-pointer" />
                                                     <FaFacebook className="text-blue-400 hover:text-blue-300 cursor-pointer" />
@@ -277,12 +228,13 @@ const ProfilePage = () => {
                                             <h1 className="text-lg font-bold">Activity</h1>
                                             <p className="text-sm text-purple-400">2.1M Followers</p>
                                         </div>
-                                        <div className="flex space-x-6 text-sm">
-                                            <button className="border-b-2 border-purple-500 text-white">Posts</button>
-                                            <button className="hover:text-purple-400">Comments</button>
-                                            <button className="hover:text-purple-400">Media</button>
-                                            <button className="hover:text-purple-400">Likes</button>
+                                        <div className="flex flex-wrap space-x-6 text-sm sm:space-x-0 sm:flex-col">
+                                            <button className="border-b-2 border-purple-500 text-white w-full sm:w-auto mb-2 sm:mb-4">Posts</button>
+                                            <button className="hover:text-purple-400 w-full sm:w-auto mb-2 sm:mb-4">Comments</button>
+                                            <button className="hover:text-purple-400 w-full sm:w-auto mb-2 sm:mb-4">Media</button>
+                                            <button className="hover:text-purple-400 w-full sm:w-auto mb-2 sm:mb-4">Likes</button>
                                         </div>
+
                                         {/* <button className="bg-purple-500 text-white px-4 py-2 rounded-full hover:bg-purple-600">
                                             Create a Post
                                         </button> */}
@@ -339,10 +291,10 @@ const ProfilePage = () => {
             {/* Notifications Modal */}
             {isDialogOpen && (
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
-                    <div className="relative w-1/4 h-auto rounded-lg p-6 shadow-lg">
+                    <div className="relative w-full sm:w-2/4 h-auto rounded-lg p-6 shadow-lg">
                         <button
                             onClick={toggleNotificationModal}
-                            className="absolute top-16 right-9 text-gray-500 hover:text-gray-300"
+                            className="absolute top-16 right-40 text-gray-500 hover:text-gray-300"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

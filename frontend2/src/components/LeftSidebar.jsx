@@ -210,7 +210,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Modal for Create Section */}
+      {/* Create Section */}
       {isCreateOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
           <div className="relative w-3/4 bg-gray-800 rounded-lg p-6 text-center shadow-lg">
@@ -235,14 +235,12 @@ const Sidebar = () => {
             </button>
 
             {selectedFile ? (
-              // Render designed post interface when a file is selected
               <>
                 <h2 className="text-lg font-medium text-gray-300 mb-4">
                   Create post
                 </h2>
                 <div className="border-2 border-dashed rounded-md p-4">
                   <div className="flex gap-6">
-                    {/* Uploaded Image Preview */}
                     <div className="w-1/2">
                       <img
                         src={imagePreview}
@@ -251,7 +249,6 @@ const Sidebar = () => {
                       />
                     </div>
 
-                    {/* Input Fields */}
                     <div className="w-1/2 space-y-4">
                       <textarea
                         placeholder="Add caption......"
@@ -278,7 +275,6 @@ const Sidebar = () => {
                         <div className="flex justify-between items-center">
                           <span className="text-gray-400">Hide view counts</span>
                           <label className="relative inline-flex items-center cursor-pointer">
-                            {/* The 'peer' class should be on the checkbox input */}
                             <input type="checkbox" className="sr-only peer" />
                             <div className="w-11 h-6 bg-gray-700 rounded-full peer-checked:bg-purple-500 transition-colors"></div>
                           </label>
@@ -286,7 +282,6 @@ const Sidebar = () => {
                         <div className="flex justify-between items-center">
                           <span className="text-gray-400">Hide like counts</span>
                           <label className="relative inline-flex items-center cursor-pointer">
-                            {/* The 'peer' class should be on the checkbox input */}
                             <input type="checkbox" className="sr-only peer" />
                             <div className="w-11 h-6 bg-gray-700 rounded-full peer-checked:bg-purple-500 transition-colors"></div>
                           </label>
@@ -336,7 +331,7 @@ const Sidebar = () => {
       {/* Notifications Modal */}
       {isNotificationOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
-          <div className="relative w-2/4 h-auto rounded-lg p-6 text-center shadow-lg">
+          <div className="relative rounded-lg text-center shadow-lg">
             <button
               onClick={toggleNotificationModal}
               className="absolute top-10 right-9 text-gray-500 hover:text-gray-300"

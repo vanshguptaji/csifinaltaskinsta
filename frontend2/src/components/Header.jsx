@@ -141,8 +141,8 @@
 
 
 import React, { useState } from "react";
-import { AiOutlineBell } from "react-icons/ai"; 
-import { FiSearch } from "react-icons/fi"; 
+import { AiOutlineBell } from "react-icons/ai";
+import { FiSearch } from "react-icons/fi";
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { Link } from "react-router-dom";
@@ -165,11 +165,11 @@ const Header = () => {
     try {
       setLoading(true);
       const response = await axios.get(`http://hola-project.onrender.com/api/accounts/search/?q=${query}`);
-      console.log(response); // Debug API response
-      setSearchResults(response.data || []); // Ensure results are an array
+      console.log(response); 
+      setSearchResults(response.data || []);
     } catch (error) {
       console.error("Error fetching users:", error);
-      setSearchResults([]); // Fallback to an empty array
+      setSearchResults([]); 
     } finally {
       setLoading(false);
     }
@@ -181,14 +181,16 @@ const Header = () => {
     if (query.trim()) {
       fetchUsers(query);
     } else {
-      setSearchResults([]); // Clear results when input is empty
+      setSearchResults([]); 
     }
   };
 
   return (
     <header className="flex flex-col sm:flex-row items-center justify-between bg-black px-6 py-4 border-b border-gray-800">
       {/* Logo */}
-      <h1 className="text-4xl sm:text-7xl font-bold text-purple-400 mb-4 sm:mb-0">hola'</h1>
+      <Link to="/mainHome">
+        <h1 className="text-4xl sm:text-7xl font-bold text-purple-400 mb-4 sm:mb-0">hola'</h1>
+      </Link>
 
       {/* Search Bar */}
       <div className="relative flex flex-col items-start w-full sm:w-1/3 mb-4 sm:mb-0">
@@ -240,7 +242,7 @@ const Header = () => {
         >
           <AiOutlineBell size={24} />
         </button>
-        
+
         {/* Profile Avatar */}
         <Link to="/profile">
           <div className="h-16 w-16 rounded-full bg-[url('images/rickandmorty3.jpg')] bg-cover cursor-pointer"></div>

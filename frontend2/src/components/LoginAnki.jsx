@@ -27,31 +27,40 @@ function LoginAnki() {
         e.preventDefault();
         try {    //https://socialnetworkingsite.onrender.com
             setLoading(true);
-            const res = await axios.post('https://socialnetworkingsite.onrender.com/auth/login', input,{
-                // withCredentials: true,
-            } );
+            const res = await axios.post('https://socialnetworkingsite.onrender.com/auth/login', input , {
+              withCredentials: true 
+            });
+          console.log(res); 
+            console.log(res.status);
+          if(res.status===200) {
+            navigate("/mainHome"); 
+          }
                 // , {
                 // headers: {
                 //     'Content-Type': 'application/json'
                 // },
                 // withCredentials: true,
             // });
-            if (res.data) {
-                // const { user, token } = res.data;
-                const {access, refresh} = res.data;
-                const user = res.config.data;
-                localStorage.setItem('accesstoken', res.data.access);
-                localStorage.setItem('refreshtoken', res.data.refresh);
-                dispatch(setAuthUser(user));
-                console.log(res);
+            // if (res.data) {
+            //     // const { user, token } = res.data;
+            //     const {access, refresh} = res.data;
+            //     const user = res.config.data;
+            //     localStorage.setItem('accesstoken', res.data.access);
+            //     localStorage.setItem('refreshtoken', res.data.refresh);
+            //     dispatch(setAuthUser(user));
+            //     console.log(res);
                 
-                navigate("/mainHome");
-                toast.success(`Welcome`);
-                setInput({
-                    email: "",
-                    password: ""
-                });
-            }
+            //     navigate("/mainHome");
+            //     toast.success(`Welcome`);
+            //     setInput({
+            //         email: "",
+            //         password: ""
+            //     });
+            // }
+            // if(res.status ==200) {
+            //   console.log(res.token); 
+            // }
+            console.log(res.data.token);
         } catch (error) {
             console.log(error);
             toast.error(error);
