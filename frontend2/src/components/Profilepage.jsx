@@ -203,7 +203,7 @@ const ProfilePage = () => {
                                                     <FaEnvelope className="text-blue-400 hover:text-gray-300 cursor-pointer" />
                                                     <MdEdit className="text-gray-400 hover:text-gray-300 cursor-pointer" />
                                                 </div>
-                                                <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-gray-700">
+                                                <div className="mt-5 grid grid-cols-1 xl:grid-cols-3 gap-4 border-t border-gray-700">
                                                     <div className="text-center">
                                                         <h3 className="font-bold text-lg">{userProfile?.num_posts}</h3>
                                                         <p className="text-gray-500">Posts</p>
@@ -228,7 +228,7 @@ const ProfilePage = () => {
                                             <h1 className="text-lg font-bold">Activity</h1>
                                             <p className="text-sm text-purple-400">2.1M Followers</p>
                                         </div>
-                                        <div className="flex flex-wrap space-x-6 text-sm sm:space-x-0 sm:flex-col">
+                                        <div className="flex flex-wrap space-x-6 text-sm sm:space-x-0 sm:flex-row sm:gap-4">
                                             <button className="border-b-2 border-purple-500 text-white w-full sm:w-auto mb-2 sm:mb-4">Posts</button>
                                             <button className="hover:text-purple-400 w-full sm:w-auto mb-2 sm:mb-4">Comments</button>
                                             <button className="hover:text-purple-400 w-full sm:w-auto mb-2 sm:mb-4">Media</button>
