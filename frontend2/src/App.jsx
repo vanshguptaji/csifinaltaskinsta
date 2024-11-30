@@ -12,20 +12,26 @@ import Exploreorienation from './components/Exploreorienation';
 import Profileorient from './components/Profileorient';
 import ForgotPass from './components/ForgotPass';
 import SplashScreen from './components/Splashscreen';
+import LoginAnki from './components/LoginAnki';
+import SignupAnki from './components/SignupAni';
+
 // import { Toaster } from './components/ui/sonner';
 
 const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+    // element: <LoginAnki/>,
   },
   {
     path: '/',
     element: <Login />,
+    // element: <LoginAnki/>,
   },
   {
     path: "/signup",
     element: <Signup />,
+    // element: <SignupAnki/>,
   },
 
   {

@@ -4,6 +4,7 @@ import Sidebar from "./components/LeftSidebar";
 import Feed from "./components/Feed";
 import RightPanel from "./components/RightPanel";
 import useGetAllPost from "./hooks/useGetAllPost";
+import SidebarAnki from "./components/LeftSidebarAnki";
 
 function App2() {
   useGetAllPost();
@@ -13,6 +14,7 @@ function App2() {
 
       <div className="w-screen flex flex-grow bg-black">
         <Sidebar />
+        {/* <SidebarAnki/> */}
 
         <div className="flex-grow p-4">
           <Feed />

@@ -76,7 +76,7 @@ button:focus-visible {
   font-family: "Baloo 2", sans-serif;
 }
 ::-webkit-scrollbar{
-  width: 1rem;
+  width: 0.5rem;
 }
 ::-webkit-scrollbar-track{
   background: black;

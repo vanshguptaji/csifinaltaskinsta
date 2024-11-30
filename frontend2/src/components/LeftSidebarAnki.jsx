@@ -19,7 +19,7 @@ import { setPosts } from '@/redux/postSlice';
 import Notifications from "./Notification";
 
 
-const Sidebar = () => {
+const SidebarAnki = () => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const { user } = useSelector(store => store.auth);
@@ -89,7 +89,7 @@ const Sidebar = () => {
 
     const token = localStorage.getItem('accesstoken');
     const formData = new FormData();
-    formData.append("content", input.content);
+    formData.append("caption", input.content);
     formData.append("media", selectedFile);
     formData.append("tags", input.tags)
     console.log(formData);
@@ -99,12 +99,12 @@ const Sidebar = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post('https://hola-project.onrender.com/api/posts/create/', formData, {
+      const res = await axios.post('https://socialnetworkingsite.onrender.com/post/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`,
+        //   Authorization: `Bearer ${token}`,
         },
-        // withCredentials: true,
+        withCredentials: true,
       });
       console.log(res);
 
@@ -140,7 +140,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="hidden lg:flex w-1/5 min-w-max bg-black h-full flex flex-col items-center py-6">
+      <div className="w-1/5 min-w-max bg-black h-full flex flex-col items-center py-6">
         <nav className="space-y-6">
           <Link to="/mainHome" className="flex items-center gap-3 text-lg">
             <AiOutlineHome size={24} />
@@ -176,41 +176,7 @@ const Sidebar = () => {
         </nav>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 w-full bg-black py-2">
-        <div className="flex justify-around text-white">
-          <Link to="/mainHome" className="flex flex-col items-center">
-            <AiOutlineHome size={24} />
-            {/* <span className="text-sm">Home</span> */}
-          </Link>
-          <Link to="/chatbox" className="flex flex-col items-center">
-            <AiOutlineMessage size={24} />
-            {/* <span className="text-sm">Messages</span> */}
-          </Link>
-          <button
-            onClick={toggleCreateModal}
-            className="flex flex-col items-center"
-          >
-            <FiPlusSquare size={24} />
-            {/* <span className="text-sm">Create</span> */}
-          </button>
-          <Link to="/explore" className="flex flex-col items-center">
-            <BsCompass size={24} />
-            {/* <span className="text-sm">Explore</span> */}
-          </Link>
-          <button
-            onClick={toggleNotificationModal}
-            className="flex flex-col items-center"
-          >
-            <AiOutlineBell size={24} />
-            {/* <span className="text-sm">Alerts</span> */}
-          </button>
-          <Link to="/profile" className="h-8 w-8 rounded-full bg-[url('images/rickandmorty3.jpg')] bg-cover cursor-pointer">
-          </Link>
-        </div>
-      </div>
-
-      {/* Create Section */}
+      {/* Modal for Create Section */}
       {isCreateOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
           <div className="relative w-3/4 bg-gray-800 rounded-lg p-6 text-center shadow-lg">
@@ -235,12 +201,14 @@ const Sidebar = () => {
             </button>
 
             {selectedFile ? (
+              // Render designed post interface when a file is selected
               <>
                 <h2 className="text-lg font-medium text-gray-300 mb-4">
                   Create post
                 </h2>
                 <div className="border-2 border-dashed rounded-md p-4">
                   <div className="flex gap-6">
+                    {/* Uploaded Image Preview */}
                     <div className="w-1/2">
                       <img
                         src={imagePreview}
@@ -249,6 +217,7 @@ const Sidebar = () => {
                       />
                     </div>
 
+                    {/* Input Fields */}
                     <div className="w-1/2 space-y-4">
                       <textarea
                         placeholder="Add caption......"
@@ -275,6 +244,7 @@ const Sidebar = () => {
                         <div className="flex justify-between items-center">
                           <span className="text-gray-400">Hide view counts</span>
                           <label className="relative inline-flex items-center cursor-pointer">
+                            {/* The 'peer' class should be on the checkbox input */}
                             <input type="checkbox" className="sr-only peer" />
                             <div className="w-11 h-6 bg-gray-700 rounded-full peer-checked:bg-purple-500 transition-colors"></div>
                           </label>
@@ -282,6 +252,7 @@ const Sidebar = () => {
                         <div className="flex justify-between items-center">
                           <span className="text-gray-400">Hide like counts</span>
                           <label className="relative inline-flex items-center cursor-pointer">
+                            {/* The 'peer' class should be on the checkbox input */}
                             <input type="checkbox" className="sr-only peer" />
                             <div className="w-11 h-6 bg-gray-700 rounded-full peer-checked:bg-purple-500 transition-colors"></div>
                           </label>
@@ -331,7 +302,7 @@ const Sidebar = () => {
       {/* Notifications Modal */}
       {isNotificationOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
-          <div className="relative rounded-lg text-center shadow-lg">
+          <div className="relative w-2/4 h-auto rounded-lg p-6 text-center shadow-lg">
             <button
               onClick={toggleNotificationModal}
               className="absolute top-10 right-9 text-gray-500 hover:text-gray-300"
@@ -359,245 +330,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
-
-
-
-
-
-// import React, { useState } from "react";
-// import {
-//   AiOutlineHome,
-//   AiOutlineBell,
-//   AiOutlineMessage,
-// } from "react-icons/ai";
-// import { BsCompass } from "react-icons/bs";
-// import { FiPlusSquare } from "react-icons/fi";
-// import { Link, useNavigate } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
-// import axios from "axios";
-// import { toast } from "sonner";
-// import lineiconsPhoto from "../images/lineicons_photos.png";
-// import Notifications from "./Notification";
-// import { setPosts } from "@/redux/postSlice";
-
-// const Sidebar = () => {
-//   const [isCreateOpen, setIsCreateOpen] = useState(false);
-//   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-//   const [selectedFile, setSelectedFile] = useState(null);
-//   const [imagePreview, setImagePreview] = useState("");
-//   const [loading, setLoading] = useState(false);
-//   const [input, setInput] = useState({ content: "", media: "", tags: "" });
-
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-//   const { user } = useSelector((store) => store.auth);
-//   const { posts } = useSelector((store) => store.post);
-
-//   // Toggles for modals
-//   const toggleCreateModal = () => setIsCreateOpen((prev) => !prev);
-//   const toggleNotificationModal = () => setIsNotificationOpen((prev) => !prev);
-
-//   // File change handler
-//   const handleFileChange = (event) => {
-//     const file = event.target.files?.[0];
-//     if (file) {
-//       setSelectedFile(file);
-//       const reader = new FileReader();
-//       reader.onload = () => setImagePreview(reader.result);
-//       reader.onerror = () => toast.error("Error loading image. Please try again.");
-//       reader.readAsDataURL(file);
-//     }
-//   };
-
-//   // Input change handler
-//   const handleInputChange = (e) => {
-//     setInput({ ...input, [e.target.name]: e.target.value });
-//   };
-
-//   // Post creation handler
-//   const createPostHandler = async () => {
-//     if (!input.content || !selectedFile) {
-//       return toast.error("Content and media are required.");
-//     }
-
-//     const formData = new FormData();
-//     formData.append("content", input.content);
-//     formData.append("media", selectedFile);
-//     formData.append("tags", input.tags);
-
-//     try {
-//       setLoading(true);
-//       const token = localStorage.getItem("accesstoken");
-//       const res = await axios.post(
-//         "https://hola-project.onrender.com/api/posts/create/",
-//         formData,
-//         {
-//           headers: {
-//             "Content-Type": "multipart/form-data",
-//             Authorization: `Bearer ${token}`,
-//           },
-//         }
-//       );
-//       dispatch(setPosts([res.data, ...posts]));
-//       toast.success("Post created successfully!");
-//       setIsCreateOpen(false);
-//     } catch (error) {
-//       toast.error(error.response?.data?.message || "Error creating post.");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <>
-//       {/* Sidebar or Bottom Bar */}
-//       <div className="hidden lg:flex w-1/5 min-w-max bg-black h-full flex-col items-center py-6">
-//         <nav className="space-y-6">
-//           <Link to="/mainHome" className="flex items-center gap-3 text-lg">
-//             <AiOutlineHome size={24} />
-//             Home
-//           </Link>
-//           <Link to="/chatbox" className="flex items-center gap-3 text-lg">
-//             <AiOutlineMessage size={24} />
-//             Messages
-//           </Link>
-//           <Link to="/explore" className="flex items-center gap-3 text-lg">
-//             <BsCompass size={24} />
-//             Explore
-//           </Link>
-//           <button
-//             onClick={toggleCreateModal}
-//             className="flex items-center gap-3 text-lg"
-//           >
-//             <FiPlusSquare size={24} />
-//             Create
-//           </button>
-//           <button
-//             onClick={toggleNotificationModal}
-//             className="flex items-center gap-3 text-lg"
-//           >
-//             <AiOutlineBell size={24} />
-//             Notifications
-//           </button>
-//         </nav>
-//       </div>
-
-//       {/* Bottom Bar */}
-//       <div className="lg:hidden fixed bottom-0 left-0 w-full bg-black py-2">
-//         <div className="flex justify-around text-white">
-//           <Link to="/mainHome" className="flex flex-col items-center">
-//             <AiOutlineHome size={24} />
-//             <span className="text-sm">Home</span>
-//           </Link>
-//           <Link to="/chatbox" className="flex flex-col items-center">
-//             <AiOutlineMessage size={24} />
-//             <span className="text-sm">Messages</span>
-//           </Link>
-//           <button
-//             onClick={toggleCreateModal}
-//             className="flex flex-col items-center"
-//           >
-//             <FiPlusSquare size={24} />
-//             <span className="text-sm">Create</span>
-//           </button>
-//           <Link to="/explore" className="flex flex-col items-center">
-//             <BsCompass size={24} />
-//             <span className="text-sm">Explore</span>
-//           </Link>
-//           <button
-//             onClick={toggleNotificationModal}
-//             className="flex flex-col items-center"
-//           >
-//             <AiOutlineBell size={24} />
-//             <span className="text-sm">Alerts</span>
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* Create Post Modal */}
-//       {isCreateOpen && (
-//         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
-//           <div className="bg-gray-800 p-6 rounded-lg w-3/4 max-w-2xl shadow-lg relative">
-//             <button
-//               onClick={toggleCreateModal}
-//               className="absolute top-4 right-4 text-gray-500 hover:text-gray-300"
-//             >
-//               ✕
-//             </button>
-//             <h2 className="text-lg font-medium text-gray-300 mb-4">
-//               Create Post
-//             </h2>
-
-//             {selectedFile ? (
-//               <div className="flex gap-6">
-//                 {/* Image Preview */}
-//                 <img
-//                   src={imagePreview}
-//                   alt="Selected"
-//                   className="w-1/2 rounded-md object-cover"
-//                 />
-//                 {/* Post Inputs */}
-//                 <div className="w-1/2 space-y-4">
-//                   <textarea
-//                     name="content"
-//                     value={input.content}
-//                     onChange={handleInputChange}
-//                     placeholder="Add caption..."
-//                     className="w-full p-2 bg-gray-700 rounded-md text-gray-200"
-//                   />
-//                   <textarea
-//                     name="tags"
-//                     value={input.tags}
-//                     onChange={handleInputChange}
-//                     placeholder="Add hashtags #..."
-//                     className="w-full p-2 bg-gray-700 rounded-md text-gray-200"
-//                   />
-//                   <button
-//                     onClick={createPostHandler}
-//                     className="w-full py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-md"
-//                   >
-//                     {loading ? "Sharing..." : "Share"}
-//                   </button>
-//                 </div>
-//               </div>
-//             ) : (
-//               <div className="text-center">
-//                 <img
-//                   src={lineiconsPhoto}
-//                   alt="Default"
-//                   className="w-full h-48 object-contain mb-4"
-//                 />
-//                 <label className="px-4 py-2 bg-purple-600 text-white rounded-md cursor-pointer">
-//                   Select from device
-//                   <input
-//                     type="file"
-//                     className="hidden"
-//                     onChange={handleFileChange}
-//                   />
-//                 </label>
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       )}
-
-//       {/* Notifications Modal */}
-//       {isNotificationOpen && (
-//         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
-//           <div className="bg-gray-800 p-6 rounded-lg w-2/4 max-w-xl shadow-lg relative">
-//             <button
-//               onClick={toggleNotificationModal}
-//               className="absolute top-4 right-4 text-gray-500 hover:text-gray-300"
-//             >
-//               ✕
-//             </button>
-//             <Notifications />
-//           </div>
-//         </div>
-//       )}
-//     </>
-//   );
-// };
-
-// export default Sidebar;
+export default SidebarAnki;
