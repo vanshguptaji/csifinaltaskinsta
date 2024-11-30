@@ -11,8 +11,10 @@ import Notifications from './components/Notification';
 import Exploreorienation from './components/Exploreorienation';
 import Profileorient from './components/Profileorient';
 import ForgotPass from './components/ForgotPass';
+import SplashScreen from './components/Splashscreen';
 import LoginAnki from './components/LoginAnki';
 import SignupAnki from './components/SignupAni';
+
 // import { Toaster } from './components/ui/sonner';
 
 const router = createBrowserRouter([
@@ -51,6 +53,10 @@ const router = createBrowserRouter([
   {
     path: "forgotpassword",
     element: <ForgotPass/>,
+  },
+  {
+    path: "splashscreen",
+    element: <SplashScreen/>,
   },
 ]);
 
