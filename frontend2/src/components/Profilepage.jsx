@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import PostCard from "./PostCard.jsx";
 import Settings from "./Settings.jsx";
 import { FaInstagram, FaFacebook, FaEdit, FaEnvelope } from 'react-icons/fa';
@@ -246,7 +245,7 @@ const ProfilePage = () => {
                                         {posts.length > 0 ? (
                                             posts.map((post) => (
                                                 <PostCard
-                                                post={post}
+                                                    post={post}
                                                 />
                                             ))
                                         ) : (
@@ -285,10 +284,10 @@ const ProfilePage = () => {
             {/* Notifications Modal */}
             {isDialogOpen && (
                 <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
-                    <div className="relative w-full sm:w-2/4 h-auto rounded-lg p-6 shadow-lg">
+                    <div className="relative rounded-lg text-center shadow-lg">
                         <button
                             onClick={toggleNotificationModal}
-                            className="absolute top-16 right-40 text-gray-500 hover:text-gray-300"
+                            className="absolute top-14 right-8 text-gray-500 hover:text-gray-300"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

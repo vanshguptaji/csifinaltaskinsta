@@ -74,9 +74,9 @@ const CommentDialog = ({ open, setOpen }) => {
               <div className='flex gap-3 items-center'>
                 <Link>
                   <Avatar>
-                    <AvatarImage 
-                    // src={selectedPost?.author?.profilePicture} 
-                    src = {rick}
+                    <AvatarImage
+                      // src={selectedPost?.author?.profilePicture} 
+                      src={rick}
                     />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
@@ -89,7 +89,7 @@ const CommentDialog = ({ open, setOpen }) => {
 
               <Dialog>
                 <DialogTrigger asChild>
-                  <MoreHorizontal className='cursor-pointer' />
+                  <MoreHorizontal className='text-white cursor-pointer' />
                 </DialogTrigger>
                 <DialogContent className="flex flex-col items-center bg-sidebarGray text-sm text-center">
                   <div className='cursor-pointer w-full text-[#88069C] font-bold'>
@@ -109,15 +109,15 @@ const CommentDialog = ({ open, setOpen }) => {
             </div>
             <div className='p-4'>
               <div className='flex items-center gap-2'>
-                <input 
-                type="text" 
-                value={text} 
-                onChange={changeEventHandler} 
-                placeholder='Add a comment...' 
-                className='w-full outline-none border text-black font-bold text-sm border-gray-300 p-2 rounded' />
-                <Button 
-                disabled={!text.trim()} 
-                onClick={sendMessageHandler} 
+                <input
+                  type="text"
+                  value={text}
+                  onChange={changeEventHandler}
+                  placeholder='Add a comment...'
+                  className='w-full outline-none border text-black font-bold text-sm border-gray-300 p-2 rounded' />
+                <Button
+                  disabled={!text.trim()}
+                  onClick={sendMessageHandler}
                 >Send</Button>
               </div>
             </div>

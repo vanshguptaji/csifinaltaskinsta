@@ -14,6 +14,7 @@ import ForgotPass from './components/ForgotPass';
 import SplashScreen from './components/Splashscreen';
 import LoginAnki from './components/LoginAnki';
 import SignupAnki from './components/SignupAni';
+import SearchProfile from './components/SearchProfile';
 
 // import { Toaster } from './components/ui/sonner';
 
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: "splashscreen",
     element: <SplashScreen/>,
+  },
+  {
+    path: "searchProfile",
+    element: <SearchProfile/>,
   },
 ]);
 
