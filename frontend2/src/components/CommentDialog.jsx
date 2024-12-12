@@ -1,131 +1,323 @@
-import React, { useEffect, useState } from 'react'
-import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { Link } from 'react-router-dom'
-import { MoreHorizontal } from 'lucide-react'
-import { Button } from './ui/button'
-import { useDispatch, useSelector } from 'react-redux'
-import Comment from './Comment'
-import axios from 'axios'
-import { toast } from 'sonner'
-import { setPosts } from '@/redux/postSlice'
-import rick from '../images/rickandmorty2.jpg'
+import React, { useEffect, useState } from 'react';
+import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Link } from 'react-router-dom';
+import { X, Mic, Image, Heart, Send } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import Comment from './Comment';
+import axios from 'axios';
+import { toast } from 'sonner';
+import { setPosts } from '@/redux/postSlice';
+// import DragCloseDrawer from './DragCloseDrawer';
 
-const CommentDialog = ({ open, setOpen }) => {
+const CommentDialog = ({ open, setOpen, postId }) => {
   const [text, setText] = useState("");
-  const { selectedPost, posts } = useSelector(store => store.post);
-  const [comment, setComment] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [post, setPost] = useState(null);
+  const [userProfile, setUserProfile] = useState(null);
+  const [parentCommentId, setParentCommentId] = useState(null); // Track the parent comment ID for replies
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  const fetchComments = async () => {
+    try {
+      const res = await axios.get(`https://hola-project.onrender.com/api/posts/${postId}/comments/`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
+        }
+      });
+      setComments(res.data);
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while fetching comments.");
+    }
+  };
+
+  const fetchPost = async () => {
+    try {
+      const res = await axios.get(`https://hola-project.onrender.com/api/posts/${postId}/`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
+        }
+      });
+      setPost(res.data);
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while fetching the post.");
+    }
+  };
+
+  const fetchUserProfile = async () => {
+    try {
+      const res = await axios.get('https://hola-project.onrender.com/api/accounts/profile/', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
+        }
+      });
+      setUserProfile(res.data);
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while fetching the user profile.");
+    }
+  };
 
   useEffect(() => {
-    if (selectedPost) {
-      setComment(selectedPost.comments);
+    if (open) {
+      fetchComments();
+      fetchPost();
+      fetchUserProfile();
     }
-  }, [selectedPost]);
+  }, [open, postId]);
 
   const changeEventHandler = (e) => {
-    const inputText = e.target.value;
-    if (inputText.trim()) {
-      setText(inputText);
-    } else {
-      setText("");
-    }
-  }
+    setText(e.target.value);
+  };
 
   const sendMessageHandler = async () => {
+    if (!text.trim()) {
+      toast.error("Comment cannot be empty.");
+      return;
+    }
+
+    const requestBody = {
+      content: text,
+    };
+
+    if (parentCommentId) {
+      requestBody.parent_comment = parentCommentId;
+    }
 
     try {
-      const res = await axios.post(`https://instaclone-g9h5.onrender.com/api/v1/post/${selectedPost?._id}/comment`, { text }, {
+      const res = await axios.post(`https://hola-project.onrender.com/api/posts/${postId}/comments/`, requestBody, {
         headers: {
-          'Content-Type': 'application/json'
-        },
-        withCredentials: true
+          'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
+        }
       });
 
-      if (res.data.success) {
-        const updatedCommentData = [...comment, res.data.comment];
-        setComment(updatedCommentData);
-
-        const updatedPostData = posts.map(p =>
-          p._id === selectedPost._id ? { ...p, comments: updatedCommentData } : p
-        );
-        dispatch(setPosts(updatedPostData));
-        toast.success(res.data.message);
+      if (res.status === 201) {
+        const updatedComments = [...comments, res.data];
+        setComments(updatedComments);
+        toast.success("Comment added successfully!");
         setText("");
+        setParentCommentId(null); // Reset parent comment ID after sending the reply
+        fetchPost();
       }
     } catch (error) {
       console.log(error);
+      toast.error("An error occurred while adding the comment.");
     }
-  }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      sendMessageHandler();
+    }
+  };
+
+  const addReply = (commentId) => {
+    setParentCommentId(commentId); // Set the parent comment ID when replying to a comment
+    setText(`@${comments.find(comment => comment.id === commentId).user.username} `); // Pre-fill the input with the username
+  };
+
+  const deleteComment = async (commentId) => {
+    const token = localStorage.getItem('accesstoken');
+    if (!token) {
+      toast.error("User is not authenticated.");
+      return;
+    }
+
+    try {
+      const res = await axios.delete(`https://hola-project.onrender.com/api/posts/comments/${commentId}/delete/`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (res.status === 200) {
+        setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+        toast.success("Comment deleted successfully!");
+        fetchPost();
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while deleting the comment.");
+    }
+  };
+
+  const likeComment = async (commentId) => {
+    const token = localStorage.getItem('accesstoken');
+    if (!token) {
+      toast.error("User is not authenticated.");
+      return;
+    }
+
+    try {
+      const res = await axios.post(`https://hola-project.onrender.com/api/posts/comments/${commentId}/like/`, {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (res.status === 200) {
+        toast.success("Comment liked successfully!");
+        // Update the comment state
+        setComments(comments.map(comment => 
+          comment.id === commentId ? { ...comment, is_liked: true, likes_count: (comment.likes_count || 0) + 1 } : comment
+        ));
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while liking the comment.");
+    }
+  };
+
+  const unlikeComment = async (commentId) => {
+    const token = localStorage.getItem('accesstoken');
+    if (!token) {
+      toast.error("User is not authenticated.");
+      return;
+    }
+
+    try {
+      const res = await axios.delete(`https://hola-project.onrender.com/api/posts/comments/${commentId}/unlike/`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (res.status === 200) {
+        toast.success("Comment unliked successfully!");
+        // Update the comment state
+        setComments(comments.map(comment => 
+          comment.id === commentId ? { ...comment, is_liked: false, likes_count: (comment.likes_count || 1) - 1 } : comment
+        ));
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while unliking the comment.");
+    }
+  };
+
+  const toggleLikeComment = async (comment) => {
+    if (comment.is_liked) {
+      await unlikeComment(comment.id);
+    } else {
+      await likeComment(comment.id);
+    }
+  };
+
+  const isMobile = window.innerWidth <= 768;
 
   return (
-    <Dialog open={open}>
-      <DialogContent onInteractOutside={() => setOpen(false)} className="max-w-5xl bg-sidebarGray p-0 flex flex-col">
-        <div className='flex flex-1'>
-          <div className='w-1/2'>
-            <img
-              src="https://images.pexels.com/photos/744780/pexels-photo-744780.jpeg?auto=compress&cs=tinysrgb&w=600"
-              alt="post_img"
-              className='w-full h-full object-cover rounded-l-lg'
-            />
-          </div>
-          <div className='w-1/2 flex flex-col justify-between'>
-            <div className='flex items-center justify-between p-4'>
-              <div className='flex gap-3 items-center'>
-                <Link>
-                  <Avatar>
-                    <AvatarImage
-                      // src={selectedPost?.author?.profilePicture} 
-                      src={rick}
-                    />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                </Link>
-                <div>
-                  <Link className='font-semibold text-xs'>{selectedPost?.author?.username}</Link>
-                  {/* <span className='text-gray-600 text-sm'>Bio here...</span> */}
+    <>
+      {isMobile ? (
+        <DragCloseDrawer open={open} setOpen={setOpen}>
+          <div className='flex flex-1 flex-col md:flex-row'>
+            <div className='w-full md:w-1/2 border-none hidden md:flex'>
+              {post && post.media && (
+                <img
+                  src={`https://hola-project.onrender.com${post.media}`}
+                  alt="post_img"
+                  className='w-full h-64 md:h-[500px] object-cover rounded-l-lg'
+                />
+              )}
+            </div>
+            <div className='w-full md:w-1/2 flex flex-col justify-between border-none'>
+              <hr className='hidden md:block' />
+              <div className='flex-1 overflow-y-auto max-h-96 p-4 pb-20 hide-scrollbar border-none'>
+                {comments.map((comment) => (
+                  <Comment key={comment.id} comment={comment} postId={postId} addReply={addReply} deleteComment={deleteComment} toggleLikeComment={toggleLikeComment} />
+                ))}
+              </div>
+              <div className='p-4 bg-[#101010] fixed bottom-0 left-0 w-full md:relative md:bottom-auto md:left-auto'>
+                <div className='flex items-center gap-2'>
+                  <div className='flex gap-3 items-center'>
+                    <Link to={`/profile/${post?.created_by?._id}`}>
+                      <Avatar>
+                        <AvatarImage src={`https://hola-project.onrender.com${userProfile?.profile_photo}`} />
+                        <AvatarFallback>{post?.created_by?.username?.[0]}</AvatarFallback>
+                      </Avatar>
+                    </Link>
+                    <div>
+                      <Link to={`/profile/${post?.created_by?._id}`} className='font-semibold text-xs'>{post?.created_by?.username}</Link>
+                    </div>
+                  </div>
+                  <input
+                    type="text"
+                    value={text}
+                    onChange={changeEventHandler}
+                    onKeyPress={handleKeyPress}
+                    placeholder='Add a comment...'
+                    className='flex-grow outline-none border-none text-sm bg-[#101010] text-white p-2 rounded'
+                  />
+                  <Mic className='text-white cursor-pointer' size={20} />
+                  <Image className='text-white cursor-pointer' size={20} />
+                  <Send onClick={sendMessageHandler} className='text-white cursor-pointer' size={20} />
                 </div>
               </div>
-
-              <Dialog>
-                <DialogTrigger asChild>
-                  <MoreHorizontal className='text-white cursor-pointer' />
-                </DialogTrigger>
-                <DialogContent className="flex flex-col items-center bg-sidebarGray text-sm text-center">
-                  <div className='cursor-pointer w-full text-[#88069C] font-bold'>
-                    Unfollow
-                  </div>
-                  <div className='cursor-pointer w-full text-[#88069C] font-bold'>
-                    Add to favorites
-                  </div>
-                </DialogContent>
-              </Dialog>
-            </div>
-            <hr />
-            <div className='flex-1 overflow-y-auto max-h-96 p-4'>
-              {
-                comment.map((comment) => <Comment key={comment._id} comment={comment} />)
-              }
-            </div>
-            <div className='p-4'>
-              <div className='flex items-center gap-2'>
-                <input
-                  type="text"
-                  value={text}
-                  onChange={changeEventHandler}
-                  placeholder='Add a comment...'
-                  className='w-full outline-none border text-black font-bold text-sm border-gray-300 p-2 rounded' />
-                <Button
-                  disabled={!text.trim()}
-                  onClick={sendMessageHandler}
-                >Send</Button>
-              </div>
             </div>
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
-  )
-}
+        </DragCloseDrawer>
+      ) : (
+        <Dialog open={open}>
+          <DialogContent onInteractOutside={() => setOpen(false)} className="max-w-5xl p-0 flex flex-col bg-[#252525] text-white border-none">
+            <DialogTitle className="sr-only">Comments</DialogTitle>
+            <div className='flex items-center justify-between p-4 bg-[#101010]'>
+              <h2 className='text-lg font-bold'>Comment</h2>
+              <button onClick={() => setOpen(false)} className='text-white'>
+                <X size={24} />
+              </button>
+            </div>
+            <div className='flex flex-1 flex-col md:flex-row'>
+              <div className='w-full md:w-1/2 border-none hidden md:flex'>
+                {post && post.media && (
+                  <img
+                    src={`https://hola-project.onrender.com${post.media}`}
+                    alt="post_img"
+                    className='w-full h-64 md:h-[500px] object-cover rounded-l-lg'
+                  />
+                )}
+              </div>
+              <div className='w-full md:w-1/2 flex flex-col justify-between border-none'>
+                <hr className='hidden md:block' />
+                <div className='flex-1 overflow-y-auto max-h-96 p-4 pb-20 hide-scrollbar border-none'>
+                  {comments.map((comment) => (
+                    <Comment key={comment.id} comment={comment} postId={postId} addReply={addReply} deleteComment={deleteComment} toggleLikeComment={toggleLikeComment} />
+                  ))}
+                </div>
+                <div className='p-4 bg-[#101010] fixed bottom-0 left-0 w-full md:relative md:bottom-auto md:left-auto'>
+                  <div className='flex items-center gap-2'>
+                    <div className='flex gap-3 items-center'>
+                      <Link to={`/profile/${post?.created_by?._id}`}>
+                        <Avatar>
+                          <AvatarImage src={`https://hola-project.onrender.com${userProfile?.profile_photo}`} />
+                          <AvatarFallback>{post?.created_by?.username?.[0]}</AvatarFallback>
+                        </Avatar>
+                      </Link>
+                      <div>
+                        <Link to={`/profile/${post?.created_by?._id}`} className='font-semibold text-xs'>{post?.created_by?.username}</Link>
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={text}
+                      onChange={changeEventHandler}
+                      onKeyPress={handleKeyPress}
+                      placeholder='Add a comment...'
+                      className='flex-grow outline-none border-none text-sm bg-[#101010] text-white p-2 rounded'
+                    />
+                    <Mic className='text-white cursor-pointer' size={20} />
+                    <Image className='text-white cursor-pointer' size={20} />
+                    <Send onClick={sendMessageHandler} className='text-white cursor-pointer' size={20} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
+    </>
+  );
+};
 
-export default CommentDialog
+export default CommentDialog;

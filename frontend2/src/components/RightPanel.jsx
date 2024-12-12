@@ -57,6 +57,7 @@ const RightPanel = () => {
   };
 
   const displayedUsers = showFullList ? suggestedUsers : suggestedUsers.slice(0, 7);
+  
 
   return (
     <div className="hidden md:block lg:w-1/4 md:min-w-max bg-black h-full p-4 mr-16">
@@ -90,13 +91,15 @@ const RightPanel = () => {
         {displayedUsers.map(user => (
             <li key={user.id} className='flex items-center justify-between bg-sidebarGray p-3 mb-4 rounded-lg'>
               {user.profilePicture ? (
-                <img src={user.profilePicture} alt={user.username} className='w-16 h-16 rounded-full mr-4 cursor-pointer' />
+                <img 
+                src={user.profile_photo} alt={user.username} 
+                className='w-16 h-16 rounded-full mr-4 cursor-pointer' />
               ) : (
                 <div className='w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center mr-4'>
                   <span className='text-white font-semibold'>{user.username[0]}</span>
                 </div>
               )}
-              <span className='text-white font-semibold'>{user.username}</span>
+              <span className='text-white font-semibold'>{user.full_name}</span>
               <button
                 className='bg-purple-600 py-1 px-3 rounded-lg text-sm hover:bg-purple-500'
                 onClick={() => handleFollow(user.id)}

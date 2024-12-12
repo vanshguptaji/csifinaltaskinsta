@@ -23,9 +23,9 @@ const PostCard = ({ post, fetchAllPosts }) => {
   const [bookmarked, setBookmarked] = useState(false);
 
   const BASE_URL = 'https://hola-project.onrender.com';
+  const CLOUDINARY_BASE_URL = 'https://res.cloudinary.com/dy1a8nyco/';
 
   useEffect(() => {
-    // Check if the current user has already liked the post
     const userId = userProfile.id;
     // console.log(post.likes);
     if (userId && post.likes?.includes(userId)) {
@@ -55,7 +55,7 @@ const PostCard = ({ post, fetchAllPosts }) => {
         }
       });
 
-      console.log('Like/Unlike API Response:', res.data); // Log the response from the API
+      console.log('Like/Unlike API Response:', res.data); 
 
       if (res.status === 201 || res.status === 204) {
         setLiked(!liked);
@@ -70,31 +70,31 @@ const PostCard = ({ post, fetchAllPosts }) => {
     }
   };
 
-  const addCommentHandler = async () => {
-    if (!text.trim()) {
-      toast.error("Comment cannot be empty.");
-      return;
-    }
+  // const addCommentHandler = async () => {
+  //   if (!text.trim()) {
+  //     toast.error("Comment cannot be empty.");
+  //     return;
+  //   }
 
-    const token = localStorage.getItem('accesstoken');
-    try {
-      const res = await axios.post(`${BASE_URL}/api/posts/${post.id}/comments/`, {
-        content: text
-      }, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      console.log('Add Comment API Response:', res.data); // Log the response from the API
-      setComments([...comments, res.data]);
-      setComment(comment + 1);
-      setText("");
-      toast.success("Comment added successfully!");
-    } catch (error) {
-      console.error(error);
-      toast.error("An error occurred while adding the comment.");
-    }
-  };
+  //   const token = localStorage.getItem('accesstoken');
+  //   try {
+  //     const res = await axios.post(`${BASE_URL}/api/posts/${post.id}/comments/`, {
+  //       content: text
+  //     }, {
+  //       headers: {
+  //         'Authorization': `Bearer ${token}`
+  //       }
+  //     });
+  //     console.log('Add Comment API Response:', res.data); // Log the response from the API
+  //     setComments([...comments, res.data]);
+  //     setComment(comment + 1);
+  //     setText("");
+  //     toast.success("Comment added successfully!");
+  //   } catch (error) {
+  //     console.error(error);
+  //     toast.error("An error occurred while adding the comment.");
+  //   }
+  // };
 
   const savePostHandler = () => {
     setBookmarked(!bookmarked);
@@ -114,10 +114,10 @@ const PostCard = ({ post, fetchAllPosts }) => {
           'Authorization': `Bearer ${token}`
         }
       });
-      console.log('Delete Post API Response:', res.data); // Log the response from the API
+      console.log('Delete Post API Response:', res.data); 
       if (res.data.message === "Post deleted successfully") {
         toast.success("Post deleted successfully!");
-        fetchAllPosts(); // Fetch the latest posts
+        fetchAllPosts(); 
       } else {
         toast.error("An error occurred while deleting the post.");
       }
@@ -141,7 +141,10 @@ const PostCard = ({ post, fetchAllPosts }) => {
     sm:max-w-[auto]">
       <div className="flex items-center justify-between">
         <div className="flex items-center mb-4">
-          <div className="h-16 w-16 rounded-full bg-[url('images/rickandmorty2.jpg')] bg-cover cursor-pointer"></div>
+          <div 
+          className="h-16 w-16 rounded-full cursor-pointer"
+          style={{ backgroundImage: `url(${post.profile_photo || 'https://images.pexels.com/photos/8358795/pexels-photo-8358795.jpeg?auto=compress&cs=tinysrgb&w=600'})`, backgroundSize: 'cover' }}
+          ></div>
           <h4 className="ml-3 font-semibold cursor-pointer text-sm sm:text-base">{post.created_by}</h4>
         </div>
         <Dialog>
@@ -158,7 +161,10 @@ const PostCard = ({ post, fetchAllPosts }) => {
       </div>
       <p className="mb-2">{post.content}</p>
       {post.media && (
-        <img src={post.media} alt={post.content} className="rounded-md w-full max-h-[700px] object-cover sm:max-h-[250px] md:max-h-[400px] mb-4" />
+        <img 
+        src={`${CLOUDINARY_BASE_URL}${post.media || 'https://images.pexels.com/photos/19598345/pexels-photo-19598345/free-photo-of-a-building-with-a-sign-on-it-at-night.jpeg?auto=compress&cs=tinysrgb&w=600'}`}
+         alt={post.content} 
+         className="rounded-md w-full max-h-[700px] object-cover sm:max-h-[250px] md:max-h-[400px] mb-4" />
       )}
       <p>{post.tags}</p>
       <div className="flex items-center gap-4">

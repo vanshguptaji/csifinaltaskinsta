@@ -25,7 +25,11 @@ const ProfilePage = () => {
     const [isDialogOpen2, setDialogOpen2] = useState(false);
     const [bio, setBio] = useState(userProfile?.bio || "");
     const [username, setUsername] = useState(userProfile?.username || "");
-    const [profilePhoto, setProfilePhoto] = useState(null); // Will hold the file object now
+    // const CLOUDINARY_BASE_URL = 'https://res.cloudinary.com/dy1a8nyco/';
+    // const [profilePhoto, setProfilePhoto] = useState(
+    //   userProfile?.profile_photo ? `${CLOUDINARY_BASE_URL}${userProfile.profile_photo}` : ""
+    // );
+    const [profilePhoto, setProfilePhoto] = useState(null);
     const [backgroundPhoto, setBackgroundPhoto] = useState(null); // Will hold the file object now
     const [loadingSubmit, setLoadingSubmit] = useState(false);
     const [input, setInput] = useState({

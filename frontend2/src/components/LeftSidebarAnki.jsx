@@ -90,7 +90,7 @@ const SidebarAnki = () => {
     const token = localStorage.getItem('accesstoken');
     const formData = new FormData();
     formData.append("caption", input.content);
-    formData.append("media", selectedFile);
+    formData.append("file", selectedFile);
     formData.append("tags", input.tags)
     console.log(formData);
     // setInput.media(file);
