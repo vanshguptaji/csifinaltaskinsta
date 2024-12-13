@@ -7,16 +7,21 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import Notifications from "./Notification";
 import searchProfile from "./SearchProfile";
 import rickandmorty from "../images/rickandmorty3.webp"
+import { fetchUserProfile } from "@/hooks/profileActions.js";
+
 
 const Header = () => {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const { userProfile, loading, error } = useSelector((state) => state.profile);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [sloading, setLoading] = useState(false);
   const [debouncedQuery, setDebouncedQuery] = useState('');
+  const CLOUDINARY_BASE_URL = 'https://res.cloudinary.com/dy1a8nyco/';
+
 
   const toggleNotificationModal = () => {
     setIsNotificationOpen((prev) => !prev);
@@ -28,7 +33,7 @@ const Header = () => {
       setDebouncedQuery(searchQuery);
     }, 300);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, [searchQuery]);
 
   useEffect(() => {
@@ -39,20 +44,26 @@ const Header = () => {
     }
   }, [debouncedQuery]);
 
+  useEffect(() => {
+    dispatch(fetchUserProfile());
+    // console.log(userProfile);
+
+  }, [dispatch]);
+
   const fetchUsers = async (query) => {
     try {
       setLoading(true);
-      console.log("Fetching data for query:", query); 
+      console.log("Fetching data for query:", query);
       const response = await axios.get(`https://hola-project.onrender.com/api/accounts/search/?q=${query}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
         }
       });
-      console.log("Search response:", response.data); 
-      setSearchResults(response.data.results || []); 
+      console.log("Search response:", response.data);
+      setSearchResults(response.data.results || []);
     } catch (error) {
       console.error("Error fetching users:", error);
-      setSearchResults([]); 
+      setSearchResults([]);
     } finally {
       setLoading(false);
     }
@@ -64,10 +75,15 @@ const Header = () => {
 
   const handleUserClick = (user) => {
     // navigate(`/user-profile/${user.id}`, { state: { userProfile: user } });
-    setSearchResults([]); 
+    setSearchResults([]);
     setSearchQuery('');
     console.log(user);
-    navigate('/searchProfile', { state: { user } });  };
+    navigate('/searchProfile', { state: { user } });
+  };
+  const profilePhoto = CLOUDINARY_BASE_URL + userProfile.profile_photo;
+  // console.log("profilephoto is ::");
+  // console.log(profilePhoto);
+  
 
   return (
     <header className="flex flex-col sm:flex-row items-center justify-between bg-black px-6 py-4 border-b border-gray-800">
@@ -92,7 +108,7 @@ const Header = () => {
         {/* Search Results Dropdown */}
         {searchQuery.trim() && (
           <div className="absolute top-12 left-0 w-full bg-sidebarGray text-black rounded-lg shadow-lg z-10">
-            {loading ? (
+            {sloading ? (
               <p className="text-center text-gray-400 p-4">Loading...</p>
             ) : searchResults.length > 0 ? (
               searchResults.map((user, index) => (
@@ -130,7 +146,10 @@ const Header = () => {
 
         {/* Profile Avatar */}
         <Link to="/profile">
-          <div className="h-16 w-16 rounded-full bg-[url('images/rickandmorty3.jpg')] bg-cover cursor-pointer"></div>
+          <div
+            className="h-16 w-16 rounded-full bg-[url('images/rickandmorty3.jpg')] bg-cover cursor-pointer"
+            style={{ backgroundImage: `url(${userProfile.profile_photo != null? profilePhoto : 'https://images.pexels.com/photos/8358795/pexels-photo-8358795.jpeg?auto=compress&cs=tinysrgb&w=600'})`, backgroundSize: 'cover' }}
+          ></div>
         </Link>
       </div>
 

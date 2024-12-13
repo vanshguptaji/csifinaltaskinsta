@@ -25,13 +25,13 @@ const PostCard = ({ post, fetchAllPosts }) => {
   const BASE_URL = 'https://hola-project.onrender.com';
   const CLOUDINARY_BASE_URL = 'https://res.cloudinary.com/dy1a8nyco/';
 
-  useEffect(() => {
-    const userId = userProfile.id;
-    // console.log(post.likes);
-    if (userId && post.likes?.includes(userId)) {
-      setLiked(true);
-    }
-  }, [post.likes]);
+  // useEffect(() => {
+  //   const userId = userProfile.id;
+  //   // console.log(post.likes);
+  //   if (userId && post.likes?.includes(userId)) {
+  //     setLiked(true);
+  //   }
+  // }, [post.likes]);
 
   const likeOrDislikeHandler = async () => {
     const token = localStorage.getItem('accesstoken');
@@ -185,7 +185,7 @@ const PostCard = ({ post, fetchAllPosts }) => {
           <p className="text-center">{post.shares || 0}</p>
         </div>
       </div>
-      {open && <CommentDialog open={open} setOpen={setOpen} postId={post.id} />}
+      {open && <CommentDialog open={open} setOpen={setOpen} postId={post.id}/>}
       {/* <div className="flex items-center justify-between mt-4">
         <input
           type="text"

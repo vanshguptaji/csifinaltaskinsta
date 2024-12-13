@@ -8,9 +8,10 @@ import Comment from './Comment';
 import axios from 'axios';
 import { toast } from 'sonner';
 import { setPosts } from '@/redux/postSlice';
-// import DragCloseDrawer from './DragCloseDrawer';
+import useGetHomepage from '@/hooks/useGetHomepage';
+import DragCloseDrawer from './DragCloseDrawer';
 
-const CommentDialog = ({ open, setOpen, postId }) => {
+const CommentDialog = ({ open, setOpen, postId}) => {
   const [text, setText] = useState("");
   const [comments, setComments] = useState([]);
   const [post, setPost] = useState(null);
@@ -18,6 +19,11 @@ const CommentDialog = ({ open, setOpen, postId }) => {
   const [parentCommentId, setParentCommentId] = useState(null); // Track the parent comment ID for replies
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  // const {posts, fetchAllPosts} = useGetHomepage();
+  const CLOUDINARY_BASE_URL = 'https://res.cloudinary.com/dy1a8nyco/';
+  // console.log(postsss);
+  
+
 
   const fetchComments = async () => {
     try {
@@ -40,6 +46,8 @@ const CommentDialog = ({ open, setOpen, postId }) => {
           'Authorization': `Bearer ${localStorage.getItem('accesstoken')}`
         }
       });
+      // console.log("response for fetch post ");
+      // console.log(res);
       setPost(res.data);
     } catch (error) {
       console.error(error);
@@ -216,8 +224,8 @@ const CommentDialog = ({ open, setOpen, postId }) => {
             <div className='w-full md:w-1/2 border-none hidden md:flex'>
               {post && post.media && (
                 <img
-                  src={`https://hola-project.onrender.com${post.media}`}
-                  alt="post_img"
+                src={`${CLOUDINARY_BASE_URL}${post.media || 'https://images.pexels.com/photos/19598345/pexels-photo-19598345/free-photo-of-a-building-with-a-sign-on-it-at-night.jpeg?auto=compress&cs=tinysrgb&w=600'}`}
+                  alt={post.content}
                   className='w-full h-64 md:h-[500px] object-cover rounded-l-lg'
                 />
               )}
@@ -272,9 +280,9 @@ const CommentDialog = ({ open, setOpen, postId }) => {
               <div className='w-full md:w-1/2 border-none hidden md:flex'>
                 {post && post.media && (
                   <img
-                    src={`https://hola-project.onrender.com${post.media}`}
-                    alt="post_img"
-                    className='w-full h-64 md:h-[500px] object-cover rounded-l-lg'
+                  src={`${CLOUDINARY_BASE_URL}${post.media || 'https://images.pexels.com/photos/19598345/pexels-photo-19598345/free-photo-of-a-building-with-a-sign-on-it-at-night.jpeg?auto=compress&cs=tinysrgb&w=600'}`}
+                  alt={post.content}
+                    className='w-full h-64 md:h-[500px] object-cover rounded-l-lg p-2'
                   />
                 )}
               </div>

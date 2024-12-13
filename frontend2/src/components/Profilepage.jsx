@@ -23,13 +23,10 @@ const ProfilePage = () => {
     const { userProfile, loading, error } = useSelector((state) => state.profile);
     const [isDialogOpen, setDialogOpen] = useState(false);
     const [isDialogOpen2, setDialogOpen2] = useState(false);
+    // dispatch(fetchUserProfile());
     const [bio, setBio] = useState(userProfile?.bio || "");
     const [username, setUsername] = useState(userProfile?.username || "");
-    // const CLOUDINARY_BASE_URL = 'https://res.cloudinary.com/dy1a8nyco/';
-    // const [profilePhoto, setProfilePhoto] = useState(
-    //   userProfile?.profile_photo ? `${CLOUDINARY_BASE_URL}${userProfile.profile_photo}` : ""
-    // );
-    const [profilePhoto, setProfilePhoto] = useState(null);
+    const [profilePhoto, setProfilePhoto] = useState("");
     const [backgroundPhoto, setBackgroundPhoto] = useState(null); // Will hold the file object now
     const [loadingSubmit, setLoadingSubmit] = useState(false);
     const [input, setInput] = useState({
@@ -38,6 +35,8 @@ const ProfilePage = () => {
         backgrund_photo: null
     });
     const [posts, setPosts] = useState([]);
+    const BASE_URL = 'https://hola-project.onrender.com';
+    const CLOUDINARY_BASE_URL = 'https://res.cloudinary.com/dy1a8nyco/';
     // const { posts } = useSelector(store => store.post);
 
     const toggleNotificationModal = () => {
@@ -49,16 +48,21 @@ const ProfilePage = () => {
 
     useEffect(() => {
         dispatch(fetchUserProfile());
-        console.log(userProfile);
+        // console.log(userProfile);
 
     }, [dispatch]);
+
+    useEffect(() => {
+        setProfilePhoto(userProfile.profile_photo);
+    }, []);
+
 
     useEffect(() => {
         const fetchUserPosts = async () => {
             // setLoading(true);
             const token = localStorage.getItem("accesstoken");
             dispatch(fetchUserProfile());
-            console.log(userProfile);
+            // console.log(userProfile);
 
             try {
                 const response = await axios.get(`https://hola-project.onrender.com/api/accounts/profile/${userProfile.id}/posts/`, {
@@ -160,14 +164,18 @@ const ProfilePage = () => {
                                 <div className="flex flex-col items-center bg-gray-900 text-white rounded-xl overflow-hidden shadow-lg">
                                     <div className="relative w-full h-40 sm:h-48">
                                         <img
-                                            src={backgroundPhoto ? URL.createObjectURL(backgroundPhoto) : "https://via.placeholder.com/900x300"}
-                                            alt="Background"
+                                            // src={backgroundPhoto ? URL.createObjectURL(backgroundPhoto) : "https://via.placeholder.com/900x300"}
+                                            // alt="Background"
+                                            src={userProfile.background_photo ? `${CLOUDINARY_BASE_URL}${userProfile.background_photo}` : "https://via.placeholder.com/150"}
+                                            alt="backpic"
                                             className="w-full h-48 object-cover"
                                         />
                                     </div>
                                     <div className="relative -mt-12 w-24 h-24 sm:w-28 sm:h-28 mx-auto">
                                         <img
-                                            src={profilePhoto ? URL.createObjectURL(profilePhoto) : "https://via.placeholder.com/150"}
+                                            // src={profilePhoto ? URL.createObjectURL(profilePhoto) : "https://via.placeholder.com/150"}
+                                            // alt="Profile"
+                                            src={userProfile.profile_photo ? `${CLOUDINARY_BASE_URL}${userProfile.profile_photo}` : "https://via.placeholder.com/150"}
                                             alt="Profile"
                                             className="rounded-full border-4 border-gray-800"
                                         />
