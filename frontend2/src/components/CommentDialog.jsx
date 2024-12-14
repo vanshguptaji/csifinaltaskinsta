@@ -224,7 +224,7 @@ const CommentDialog = ({ open, setOpen, postId}) => {
             <div className='w-full md:w-1/2 border-none hidden md:flex'>
               {post && post.media && (
                 <img
-                src={`${CLOUDINARY_BASE_URL}${post.media || 'https://images.pexels.com/photos/19598345/pexels-photo-19598345/free-photo-of-a-building-with-a-sign-on-it-at-night.jpeg?auto=compress&cs=tinysrgb&w=600'}`}
+                src={`${post.media} || 'https://images.pexels.com/photos/19598345/pexels-photo-19598345/free-photo-of-a-building-with-a-sign-on-it-at-night.jpeg?auto=compress&cs=tinysrgb&w=600'`}
                   alt={post.content}
                   className='w-full h-64 md:h-[500px] object-cover rounded-l-lg'
                 />
@@ -242,7 +242,7 @@ const CommentDialog = ({ open, setOpen, postId}) => {
                   <div className='flex gap-3 items-center'>
                     <Link to={`/profile/${post?.created_by?._id}`}>
                       <Avatar>
-                        <AvatarImage src={`https://hola-project.onrender.com${userProfile?.profile_photo}`} />
+                        <AvatarImage src={`${userProfile?.profile_photo}`} />
                         <AvatarFallback>{post?.created_by?.username?.[0]}</AvatarFallback>
                       </Avatar>
                     </Link>
@@ -268,9 +268,9 @@ const CommentDialog = ({ open, setOpen, postId}) => {
         </DragCloseDrawer>
       ) : (
         <Dialog open={open}>
-          <DialogContent onInteractOutside={() => setOpen(false)} className="max-w-5xl p-0 flex flex-col bg-[#252525] text-white border-none">
+          <DialogContent onInteractOutside={() => setOpen(false)} className="max-w-5xl p-0 flex flex-col bg-[#252525] text-white border-none rounded-md">
             <DialogTitle className="sr-only">Comments</DialogTitle>
-            <div className='flex items-center justify-between p-4 bg-[#101010]'>
+            <div className='flex items-center justify-between p-4 bg-[#101010] rounded-md'>
               <h2 className='text-lg font-bold'>Comment</h2>
               <button onClick={() => setOpen(false)} className='text-white'>
                 <X size={24} />
@@ -280,7 +280,7 @@ const CommentDialog = ({ open, setOpen, postId}) => {
               <div className='w-full md:w-1/2 border-none hidden md:flex'>
                 {post && post.media && (
                   <img
-                  src={`${CLOUDINARY_BASE_URL}${post.media || 'https://images.pexels.com/photos/19598345/pexels-photo-19598345/free-photo-of-a-building-with-a-sign-on-it-at-night.jpeg?auto=compress&cs=tinysrgb&w=600'}`}
+                  src={`${post.media || 'https://images.pexels.com/photos/19598345/pexels-photo-19598345/free-photo-of-a-building-with-a-sign-on-it-at-night.jpeg?auto=compress&cs=tinysrgb&w=600'}`}
                   alt={post.content}
                     className='w-full h-64 md:h-[500px] object-cover rounded-l-lg p-2'
                   />
@@ -293,12 +293,12 @@ const CommentDialog = ({ open, setOpen, postId}) => {
                     <Comment key={comment.id} comment={comment} postId={postId} addReply={addReply} deleteComment={deleteComment} toggleLikeComment={toggleLikeComment} />
                   ))}
                 </div>
-                <div className='p-4 bg-[#101010] fixed bottom-0 left-0 w-full md:relative md:bottom-auto md:left-auto'>
+                <div className='p-4 bg-[#101010] fixed bottom-0 left-0 w-full md:relative md:bottom-auto md:left-auto rounded-md'>
                   <div className='flex items-center gap-2'>
                     <div className='flex gap-3 items-center'>
                       <Link to={`/profile/${post?.created_by?._id}`}>
                         <Avatar>
-                          <AvatarImage src={`https://hola-project.onrender.com${userProfile?.profile_photo}`} />
+                          <AvatarImage src={`${userProfile?.profile_photo}`} />
                           <AvatarFallback>{post?.created_by?.username?.[0]}</AvatarFallback>
                         </Avatar>
                       </Link>

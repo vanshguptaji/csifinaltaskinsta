@@ -162,7 +162,7 @@ const PostCard = ({ post, fetchAllPosts }) => {
       <p className="mb-2">{post.content}</p>
       {post.media && (
         <img 
-        src={`${CLOUDINARY_BASE_URL}${post.media || 'https://images.pexels.com/photos/19598345/pexels-photo-19598345/free-photo-of-a-building-with-a-sign-on-it-at-night.jpeg?auto=compress&cs=tinysrgb&w=600'}`}
+        src={`${post.media || 'https://images.pexels.com/photos/19598345/pexels-photo-19598345/free-photo-of-a-building-with-a-sign-on-it-at-night.jpeg?auto=compress&cs=tinysrgb&w=600'}`}
          alt={post.content} 
          className="rounded-md w-full max-h-[700px] object-cover sm:max-h-[250px] md:max-h-[400px] mb-4" />
       )}

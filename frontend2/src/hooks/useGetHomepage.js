@@ -27,7 +27,7 @@ const useGetHomepage = () => {
             
 
             if (res.status === 401) {
-                token = await refreshToken();
+                token = localStorage.getItem('refreshtoken');
                 res = await axios.get('https://hola-project.onrender.com/api/accounts/homepage/', {
                     headers: {
                         'Authorization': `Bearer ${token}`

@@ -91,7 +91,8 @@ const Sidebar = () => {
     const formData = new FormData();
     formData.append("content", input.content);
     formData.append("media", selectedFile);
-    formData.append("tags", input.tags)
+    formData.append("tags", input.tags);
+    formData.append("is_public", true);
     console.log(formData);
     // setInput.media(file);
     console.log(input);
@@ -112,6 +113,7 @@ const Sidebar = () => {
         dispatch(setPosts([res.data, ...posts]));// [1] -> [1,2] -> total element = 2
         toast.success("post created");
         setOpen(false);
+        setIsCreateOpen(false);
       }
     } catch (error) {
       console.log(error);
@@ -213,7 +215,7 @@ const Sidebar = () => {
       {/* Create Section */}
       {isCreateOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
-          <div className="relative w-3/4 bg-gray-800 rounded-lg p-6 text-center shadow-lg">
+          <div className="relative w-3/4 h-min bg-gray-800 rounded-lg p-6 text-center shadow-lg">
             <button
               onClick={toggleCreateModal}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-300"

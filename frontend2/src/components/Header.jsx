@@ -27,7 +27,6 @@ const Header = () => {
     setIsNotificationOpen((prev) => !prev);
   };
 
-  // Debounce effect to update debouncedQuery after typing
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(searchQuery);
@@ -40,7 +39,7 @@ const Header = () => {
     if (debouncedQuery.length >= 3) {
       fetchUsers(debouncedQuery);
     } else {
-      setSearchResults([]); // Clear search results if query is less than 3 chars
+      setSearchResults([]);
     }
   }, [debouncedQuery]);
 
@@ -48,7 +47,7 @@ const Header = () => {
     dispatch(fetchUserProfile());
     // console.log(userProfile);
 
-  }, [dispatch]);
+  }, []);
 
   const fetchUsers = async (query) => {
     try {

@@ -7,6 +7,9 @@ export default {
 	],
 	theme: {
 		extend: {
+			screens: {
+				'xs': '480px', // Custom breakpoint for 480px
+			  },
 			fontFamily: {
 				Baloo: ['Baloo 2"', "sans-serif"]
 			},

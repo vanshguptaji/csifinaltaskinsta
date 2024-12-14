@@ -89,7 +89,7 @@ function App2() {
   return (
     <div className="w-screen h-screen flex flex-col bg-black text-white overflow-x-hidden">
       {/* Header: Fixed at the top */}
-      <div className="fixed top-0 left-0 w-full z-50">
+      <div className="fixed top-0 left-0 w-full z-40">
         <Header />
       </div>
 
@@ -99,11 +99,15 @@ function App2() {
           <Sidebar />
         </div>
 
+        <div className="block lg:hidden z-50">
+          <Sidebar />
+        </div>
+
         {/* Main Content */}
         <div className="md:mt-16 mt-20 flex-grow lg:ml-[250px] p-4">
           <Feed />
           {/* Right Panel: Display below Feed on small screens */}
-          <div className="lg:hidden mt-8">
+          <div className="block lg:hidden mt-8 mb-8">
             <RightPanel />
           </div>
         </div>

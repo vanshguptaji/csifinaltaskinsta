@@ -52,7 +52,7 @@ function Login() {
                 localStorage.setItem('refreshtoken', refresh);
                 dispatch(setAuthUser(user));
                 navigate("/mainHome");
-                fetchAllPosts();
+                // fetchAllPosts();
                 toast.success(`Welcome`);
                 setInput({
                     email: "",

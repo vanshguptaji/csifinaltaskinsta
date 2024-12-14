@@ -11,7 +11,7 @@ function Profileorient() {
       </div>
 
       <div className="w-screen flex flex-grow bg-black">
-        <div className="fixed top-[120px] left-12 h-[calc(100vh-64px)] w-[250px] z-40 hidden lg:block">
+        <div className="fixed top-[120px] left-12 h-[calc(100vh-64px)] w-[250px] z-40 lg:block">
           <Sidebar />
         </div>
 
